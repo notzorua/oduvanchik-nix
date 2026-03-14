@@ -5,8 +5,8 @@
 
     settings = {
       user = {
-        name = "Frost-Phoenix";
-        email = "67cyril6767@gmail.com";
+        name = "adarkaz";
+        email = "swdmeow@gmail.com";
       };
 
       init.defaultBranch = "main";
@@ -14,14 +14,6 @@
       diff.colorMoved = "default";
       pull.ff = "only";
       color.ui = true;
-
-      url = {
-        "git@github.com:".insteadOf = [
-          "gh:"
-          "https://github.com/"
-        ];
-        "git@github.com:frost-phoenix/".insteadOf = "fp:";
-      };
 
       core.excludesFile = "/home/${username}/.config/git/.gitignore";
     };

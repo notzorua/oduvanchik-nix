@@ -17,11 +17,16 @@
     "hyprctl setcursor Bibata-Modern-Ice 24 &"
     "init-wallpaper &"
 
+    #tray icon support
+    "xembedsniproxy"
+
     # only start monitor watching screen on laptop
     "${if (host == "p14s" || host == "laptop") then "monitor-watcher &" else ""}"
 
     "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false"
     "[workspace 1 silent] zen-beta"
     "[workspace 2 silent] ghostty"
+    "[workspace 3 silent] AyuGram"
+    "[workspace 4 silent] AmneziaVPN"
   ];
 }

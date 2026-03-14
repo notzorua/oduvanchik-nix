@@ -145,20 +145,20 @@ in
       tooltip = true;
       tooltip-format = "Keyboard layout";
       format = "<span foreground='#FABD2F'> </span> {}";
-      format-fr = "FR";
+      format-ru = "RU";
       format-en = "US";
       on-click = "hyprctl switchxkblayout at-translated-set-2-keyboard next";
     };
     "custom/launcher" = {
       format = "";
-      on-click = "random-wallpaper";
-      on-click-right = "rofi -show drun";
+      on-click = "rofi -show drun";
+      on-click-right = "random-wallpaper";
       tooltip = "true";
-      tooltip-format = "Random Wallpaper";
+      tooltip-format = "Open apps menu";
     };
     "custom/notification" = {
       tooltip = true;
-      tooltip-format = "Notifications";
+      tooltip-format = "notifications";
       format = "{icon}";
       format-icons = {
         notification = "<span foreground='red'><sup></sup></span>";
@@ -179,7 +179,7 @@ in
     };
     "custom/power-menu" = {
       tooltip = true;
-      tooltip-format = "Power menu";
+      tooltip-format = "power menu";
       format = "<span foreground='${red}'> </span>";
       on-click = "power-menu";
     };

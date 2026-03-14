@@ -28,12 +28,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser.url = "github:0xc000022070/zen-browser-flake/beta";
+    
+    nixvim.url = "github:dc-tec/nixvim";
   };
 
   outputs =
     { nixpkgs, self, ... }@inputs:
     let
-      username = "frostphoenix";
+      username = "swd";
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;

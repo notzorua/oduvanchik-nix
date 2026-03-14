@@ -4,7 +4,6 @@
 
   programs.zen-browser = {
     enable = true;
-    suppressXdgMigrationWarning = true;
   };
 
   xdg.mimeApps =
@@ -14,7 +13,7 @@
           system = pkgs.stdenv.hostPlatform.system;
           zen-browser = inputs.zen-browser.packages.${system}.beta;
         in
-        zen-browser.meta.desktopFileName;
+        "zen.desktop";
 
       associations = builtins.listToAttrs (
         map (name: { inherit name value; }) [

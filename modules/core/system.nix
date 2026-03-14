@@ -23,12 +23,20 @@
     };
   };
 
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 7d";
+  };
+
   environment.systemPackages = with pkgs; [
+    kdePackages.plasma-workspace
+    libappindicator-gtk3
     wget
     git
   ];
 
-  time.timeZone = "Europe/Paris";
+  time.timeZone = "Europe/Moscow";
   i18n.defaultLocale = "en_US.UTF-8";
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "26.05";

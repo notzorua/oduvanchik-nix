@@ -2,7 +2,7 @@
 {
   services = {
     gvfs.enable = true;
-
+            
     gnome = {
       tinysparql.enable = true;
       gnome-keyring.enable = true;

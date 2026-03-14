@@ -4,7 +4,7 @@
     "$mod" = "SUPER";
 
     input = {
-      kb_layout = "us,fr";
+      kb_layout = "us,ru";
       kb_options = "grp:alt_caps_toggle";
 
       repeat_delay = 300;
@@ -35,7 +35,7 @@
       disable_hyprland_logo = true;
       disable_splash_rendering = false;
 
-      focus_on_activate = true;
+      focus_on_activate = false;
       middle_click_paste = false;
 
       disable_autoreload = false;

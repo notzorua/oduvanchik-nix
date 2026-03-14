@@ -81,6 +81,5 @@
     xdg-utils
 
     winetricks
-    wineWow64Packages.waylandFull
   ];
 }

@@ -40,9 +40,9 @@
       # "$mod SHIFT, W, exec, vm-start"
 
       # screenshot
-      ", Print, exec, screenshot --copy"
-      "$mod, Print, exec, screenshot --save"
-      "$mod SHIFT, Print, exec, screenshot --swappy"
+      ", F11, exec, screenshot --copy"
+      "$mod, F11, exec, screenshot --save"
+      "$mod SHIFT, F11, exec, screenshot --swappy"
 
       # OCR
       "$mod CTRL, O, exec, ocr"

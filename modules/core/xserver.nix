@@ -2,8 +2,13 @@
 {
   services = {
     xserver = {
+      videoDrivers = [ "nvidia" ];
       enable = true;
-      xkb.layout = "us,fr";
+
+      xkb = {
+        layout = "us,ru";
+        options = "grp:alt_caps_toggle";
+      };
     };
 
     displayManager.autoLogin = {

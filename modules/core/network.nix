@@ -5,6 +5,7 @@
     nftables.enable = true;
     hostName = "${host}";
     networkmanager.enable = true;
+    networkmanager.insertNameservers = [ "8.8.8.8" "1.1.1.1" ];
     nameservers = [
       "8.8.8.8"
       "8.8.4.4"

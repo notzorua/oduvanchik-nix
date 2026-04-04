@@ -11,7 +11,7 @@
     inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.winetricks-git
     inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.wine-ge
     vulkan-tools
-
+    samba
 
     cabextract
 

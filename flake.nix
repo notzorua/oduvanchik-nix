@@ -33,10 +33,13 @@
     # steam interface
     millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     #nixvim.url = "github:dc-tec/nixvim";
+
+    #genshin
+    aagl.url = "github:ezKEa/aagl-gtk-on-nix";
   };
 
   outputs =
-    { nixpkgs, self, ... }@inputs:
+    { nixpkgs, self, aagl, ... }@inputs:
     let
       username = "swd";
       system = "x86_64-linux";
@@ -61,7 +64,7 @@
           modules = [ ./hosts/laptop ];
           specialArgs = {
             host = "laptop";
-            inherit self inputs username;
+            inherit self inputs username aagl;
           };
         };
         p14s = nixpkgs.lib.nixosSystem {

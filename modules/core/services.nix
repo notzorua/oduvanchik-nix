@@ -4,9 +4,7 @@
     asusd.enable = true;
     gvfs.enable = true;
             
-    timesyncd.enable = true;      # Keep the time exact (seconds/minutes)
     automatic-timezoned.enable = true; # Change the hour when you travel
-    geoclue2.enable = true;       # Let the PC find your location
 
     gnome = {
       tinysparql.enable = true;

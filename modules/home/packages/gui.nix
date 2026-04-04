@@ -4,6 +4,7 @@
     ## Multimedia
     amberol # music player
     audacity
+    davinci-resolve-studio
     gimp
     media-downloader
     obs-studio
@@ -22,9 +23,5 @@
     popsicle
     mission-center # GUI resources monitor
     zenity
-
-    ## Level editor
-    ldtk
-    tiled
   ];
 }

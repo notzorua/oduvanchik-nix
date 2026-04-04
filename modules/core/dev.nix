@@ -11,6 +11,10 @@
     # Add other common dependencies if needed
     libsm              # (formerly xorg.libSM)
 
+    libadwaita
+    gtk4
+    pango
+    gdk-pixbuf
     # Essential .NET/SkiaSharp extras not in that script but required for it to actually run:
     icu                # Required for .NET globalization
     openssl            # Required for .NET networking/auth

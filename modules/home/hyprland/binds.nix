@@ -17,6 +17,7 @@
       "$mod, B, exec, [workspace 1 silent] zen-beta"
       "$mod, Q, killactive,"
       "$mod, F, fullscreen, 0"
+      "$mod SHIFT, F, fullscreenstate, 2"
       "$mod SHIFT, F, fullscreen, 1"
       "$mod, Space, exec, toggle-float"
       "$mod, D, exec, toggle-rofi rofi -show drun"

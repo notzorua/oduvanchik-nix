@@ -46,8 +46,11 @@
     
     lua-language-server                # for lua_ls
     ruff
+    linux-wifi-hotspot
+    cool-retro-term
 
     arduino
+    arduino-cli
 
     omnisharp-roslyn    # Language Server (LSP)
     netcoredbg          # Debugger (DAP)

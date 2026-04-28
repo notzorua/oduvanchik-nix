@@ -31,7 +31,7 @@
           colorsheme = "night";
           layout = "teleport";
           resolution = "1920x1080";
-        in inputs.grubshin-bootpact.packages.pkgs.system.${colorsheme}.${layout}.${resolution};
+        in inputs.grubshin-bootpact.packages.${pkgs.stdenv.hostPlatform.system}.${colorsheme}.${layout}.${resolution};
       };
 
       # 3. Keep EFI settings

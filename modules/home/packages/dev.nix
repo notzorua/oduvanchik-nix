@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     ## Lsp
     nixd # nix
+    nil
 
     ## formating
     shfmt

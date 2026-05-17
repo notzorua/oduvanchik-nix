@@ -5,6 +5,9 @@
     nixd # nix
     nil
 
+    vtsls
+    typescript
+
     ## formating
     shfmt
     treefmt
@@ -21,7 +24,7 @@
 
     ## Python
     python3
-    
+
     python3Packages.pip
     python3Packages.ipython
     python3Packages.python-lsp-server
@@ -36,13 +39,13 @@
 
     # Node.js
     nodejs_20
-    
+
     pyright
-    
+
     universal-ctags
     ripgrep
-    
-    lua-language-server                # for lua_ls
+
+    lua-language-server # for lua_ls
     ruff
     linux-wifi-hotspot
     cool-retro-term
@@ -50,11 +53,11 @@
     arduino
     arduino-cli
 
-    omnisharp-roslyn    # Language Server (LSP)
-    netcoredbg          # Debugger (DAP)
-    ripgrep             # Required by many AstroNvim features
+    omnisharp-roslyn # Language Server (LSP)
+    netcoredbg # Debugger (DAP)
+    ripgrep # Required by many AstroNvim features
     #csharp-ls
-    
+
     #dotnet-sdk_10
 
     #(with pkgs.dotnetCorePackages; combinePackages [
@@ -70,10 +73,10 @@
     freetype
     skia
     #xdotool
-    libx11       # Essential for Avalonia
-    icu               # Essential for .NET Globalization
-    zlib              # Common compression
-    libGL             # Hardware acceleration
-    openssl           # Networking/Auth
+    libx11 # Essential for Avalonia
+    icu # Essential for .NET Globalization
+    zlib # Common compression
+    libGL # Hardware acceleration
+    openssl # Networking/Auth
   ];
 }

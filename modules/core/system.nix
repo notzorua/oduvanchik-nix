@@ -3,6 +3,7 @@
   # imports = [ inputs.nix-gaming.nixosModules.default ];
   nix = {
     settings = {
+      trusted-users = [ "swd" ];
       auto-optimise-store = true;
       experimental-features = [
         "nix-command"
@@ -31,7 +32,7 @@
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
-  
+
   i18n.supportedLocales = [
     "en_US.UTF-8/UTF-8"
     "ru_RU.UTF-8/UTF-8"
@@ -40,8 +41,10 @@
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "26.05";
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 16*1024; # 16 GiB
-  }];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024; # 16 GiB
+    }
+  ];
 }

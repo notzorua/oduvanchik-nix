@@ -1,10 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   services = {
     asusd.enable = true;
     gvfs.enable = true;
-            
-    automatic-timezoned.enable = true; # Change the hour when you travel
 
     gnome = {
       tinysparql.enable = true;
@@ -32,4 +30,5 @@
   };
 
   time.hardwareClockInLocalTime = true;
+  time.timeZone = "Europe/Moscow";
 }

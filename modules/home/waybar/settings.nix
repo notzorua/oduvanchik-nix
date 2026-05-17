@@ -46,15 +46,16 @@ in
       "custom/power-menu"
     ];
     clock = {
+      locale = "ru_RU.UTF-8"; # Set the locale for Russian
       calendar = {
-        iso8601 = true;  
+        iso8601 = true;
         on-scroll = true;
         format = {
           today = "<span color='#98971A'><b>{}</b></span>";
         };
       };
       actions = {
-        "on-scroll-up"   = "shift_up";   # Scroll to next month
+        "on-scroll-up" = "shift_up"; # Scroll to next month
         "on-scroll-down" = "shift_down"; # Scroll to previous month
         "on-click-middle" = "shift_reset"; # RE-SET to current date
       };

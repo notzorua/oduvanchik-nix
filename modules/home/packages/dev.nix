@@ -8,6 +8,9 @@
     vtsls
     typescript
 
+    gemini-cli-bin
+    claude-code
+
     ## formating
     shfmt
     treefmt
@@ -38,7 +41,8 @@
     python3Packages.black
 
     # Node.js
-    nodejs_20
+    ##nodejs_20
+    nodejs
 
     pyright
 

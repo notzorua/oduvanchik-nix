@@ -42,7 +42,7 @@ in
     cursorTheme = {
       name = "Bibata-Modern-Ice";
       package = pkgs.bibata-cursors;
-      size = 24;
+      size = 48;
     };
 
     gtk3 = {
@@ -73,6 +73,6 @@ in
   home.pointerCursor = {
     name = "Bibata-Modern-Ice";
     package = pkgs.bibata-cursors;
-    size = 24;
+    size = 48;
   };
 }

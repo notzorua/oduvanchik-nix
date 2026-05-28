@@ -29,6 +29,5 @@
     udisks2.enable = true;
   };
 
-  time.hardwareClockInLocalTime = true;
   time.timeZone = "Europe/Moscow";
 }

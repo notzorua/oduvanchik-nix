@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./nixpkgs.nix
@@ -22,5 +22,10 @@
     ./wayland.nix
     ./virtualization.nix
     ./qmk.nix
+  ];
+
+  # This adds the package to your global system environment
+  environment.systemPackages = [
+    (pkgs.callPackage ./nvimunity.nix { })
   ];
 }

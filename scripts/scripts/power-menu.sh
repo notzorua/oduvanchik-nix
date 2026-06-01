@@ -25,7 +25,7 @@ run_rofi() {
 }
 
 confirm_cmd() {
-  rofi -theme-str 'window {width: 200px;}' \
+  rofi -theme-str 'window { width: 160px; }' \
     -theme-str 'listview { columns: 2; }' \
     -dmenu -theme ${theme} -markup-rows
 }

@@ -16,7 +16,7 @@ let
     cyan = "#689D6A";
     orange = "#D65D0E";
     orange_bright = "#FE8019";
-    opacity = "1";
+    opacity = "0.7";
     indicator_height = "2px";
   };
 in
@@ -29,13 +29,11 @@ in
       margin: 0;
       font-family: ${font};
       font-weight: ${font_weight};
-      opacity: ${opacity};
       font-size: ${font_size};
     }
 
     window#waybar {
-      background: ${background_1};
-      border-top: 1px solid ${border_color};
+      background: rgba(40, 40, 40, ${opacity});
     }
 
     tooltip {

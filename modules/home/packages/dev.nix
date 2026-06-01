@@ -5,6 +5,7 @@
     nixd # nix
     nil
 
+    ## javascript
     vtsls
     typescript
 

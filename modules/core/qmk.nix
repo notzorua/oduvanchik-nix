@@ -5,6 +5,9 @@
     vial
     qmk
     qmk-udev-rules
+
+
+    waydroid-helper
   ];
 
   services.udev.packages = with pkgs; [

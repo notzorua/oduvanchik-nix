@@ -26,6 +26,13 @@
     valgrind
     llvmPackages_20.clang-tools
 
+    #rust
+    cargo
+    rust-analyzer
+    rustc
+    rustfmt
+    # rustup
+
     ## Python
     python3
 

@@ -15,9 +15,13 @@
     #"wl-clip-persist --clipboard both &"
     #"wl-paste --watch cliphist store &"
     "waybar &"
+
+    # screen time
+    "niri-screen-time -daemon"
+
     "swaync &"
     "udiskie --automount --notify --smart-tray &"
-    "hyprctl setcursor Bibata-Modern-Ice 24 &"
+    "hyprctl setcursor Bibata-Modern-Ice 48 &"
     "init-wallpaper &"
 
     #tray icon support

@@ -13,17 +13,14 @@
 Конфиг великолепный, крутой и лучший и ещё вооот такой
 
 ```
-                    .  *   .    *  .
-                 *    \  |  /    *
-              .   `  . \|/ .  '   .
-            -- -- -- -( ● )-- -- --      zoroa @ desktop
-              '   .  '/|\`  .   '        ─────────────────
-                 *    /  |  \    *        OS      NixOS (unstable)
-                    '   *   `  '          WM      Hyprland
-                        |                 Shell   zsh
-                       /|\                Theme   Gruvbox Dark Hard
-                      ' | '               Bar     Waybar
-                        |                 Term    Ghostty
+	zoroa @ desktop
+	─────────────────
+	OS      NixOS (unstable)
+	WM      Hyprland
+	Shell   zsh
+	Theme   Gruvbox Dark Hard
+	Bar     Waybar
+	Term    Ghostty
 ```
 
 ## Стек

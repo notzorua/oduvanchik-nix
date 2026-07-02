@@ -44,6 +44,8 @@
 
       "match:xwayland true, rounding 0"
 
+      "border_size 0, match:fullscreen 1"
+
       # No gaps when only
       "border_size 0, match:float 0, match:workspace w[tv1]"
       "rounding 0, match:float 0, match:workspace w[tv1]"
@@ -54,9 +56,8 @@
     layerrule = [
       "match:namespace rofi, dim_around on"
       "match:namespace swaync-control-center, dim_around on"
-    ];
-
-    # No gaps when only
+      "match:namespace waybar, blur on"
+    ];    # No gaps when only
     workspace = [
       "w[tv1], gapsout:0, gapsin:0"
       "f[1], gapsout:0, gapsin:0"

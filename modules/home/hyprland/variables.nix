@@ -26,5 +26,9 @@
     CLUTTER_BACKEND = "wayland";
     GTK_THEME = "Colloid-Green-Dark-Gruvbox";
     GRIMBLAST_HIDE_CURSOR = 0;
+    XCURSOR_SIZE = 24;
+    http_proxy = "http://127.0.0.1:2080";
+    https_proxy = "http://127.0.0.1:2080";
+    all_proxy = "socks5://127.0.0.1:2080";    
   };
 }

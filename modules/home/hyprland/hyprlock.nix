@@ -13,96 +13,57 @@
       background = [
         {
           path = "${../../../wallpapers/otherWallpaper/gruvbox/forest_road.jpg}";
-
           color = "rgba(29, 32, 33, 255)";
-          blur_passes = 1.5;
+          blur_passes = 0;
           vibrancy_darkness = 0.0;
         }
       ];
 
-      shape = [
-        # User box
-        {
-          size = "300, 50";
-
-          rounding = 0;
-          border_size = 2;
-          color = "rgba(102, 92, 84, 0.33)";
-          border_color = "rgba(168, 153, 132, 0.95)";
-
-          position = "0, 270";
-          halign = "center";
-          valign = "bottom";
-        }
-      ];
-
       label = [
-        # Time
         {
-          text = ''cmd[update:1000] echo "$(date +'%k:%M')"'';
-
-          font_size = 115;
+          text = ''cmd[update:1000] echo "$(date +'%H:%M')"'';
+          font_size = 120;
           font_family = "Maple Mono Bold";
-
-          shadow_passes = 3;
-          color = "rgba(235, 219, 178, 0.9)";
-
-          position = "0, -150";
+          shadow_passes = 0;
+          shadow_boost = 2.0;
+          shadow_color = "rgba(0, 0, 0, 0.8)";
+          color = "rgba(0, 0, 0, 1.0)";
+          position = "0, -120";
           halign = "center";
           valign = "top";
         }
-        # Date
         {
-          text = ''cmd[update:1000] echo "- $(date +'%A, %B %d') -" '';
-
-          font_size = 18;
+          text = ''cmd[update:1000] echo "$(date +'%A, %d %B')"'';
+          font_size = 20;
           font_family = "Maple Mono";
-
-          shadow_passes = 3;
-          color = "rgba(235, 219, 178, 0.9)";
-
-          position = "0, -350";
+          shadow_passes = 0;
+          shadow_boost = 2.0;
+          shadow_color = "rgba(0, 0, 0, 0.8)";
+          color = "rgba(0, 0, 0, 0.7)";
+          position = "0, -320";
           halign = "center";
           valign = "top";
-        }
-        # Username
-        {
-          text = "  $USER";
-
-          font_size = 15;
-          font_family = "Maple Mono Bold";
-
-          color = "rgba(235, 219, 178, 1)";
-
-          position = "0, 284";
-          halign = "center";
-          valign = "bottom";
         }
       ];
 
       input-field = [
         {
-          size = "300, 50";
-          rounding = 0;
-          outline_thickness = 2;
-
-          dots_spacing = 0.4;
-
+          size = "280, 46";
+          rounding = 8;
+          outline_thickness = 1;
+          dots_spacing = 0.35;
+          dots_size = 0.25;
           font_color = "rgba(235, 219, 178, 0.9)";
-          font_family = "Maple Mono Bold";
-
-          outer_color = "rgba(168, 153, 132, 0.95)";
-          inner_color = "rgba(102, 92, 84, 0.33)";
-          check_color = "rgba(152, 151, 26, 0.95)";
-          fail_color = "rgba(204, 36, 29, 0.95)";
-          capslock_color = "rgba(215, 153, 33, 0.95)";
-          bothlock_color = "rgba(215, 153, 33, 0.95)";
-
+          font_family = "Maple Mono";
+          outer_color = "rgba(80, 73, 69, 0.8)";
+          inner_color = "rgba(29, 32, 33, 0.85)";
+          check_color = "rgba(152, 151, 26, 0.9)";
+          fail_color = "rgba(204, 36, 29, 0.9)";
+          capslock_color = "rgba(215, 153, 33, 0.9)";
           hide_input = false;
-          fade_on_empty = false;
-          placeholder_text = ''<i><span foreground="##fbf1c7">Enter Password</span></i>'';
-
-          position = "0, 200";
+          fade_on_empty = true;
+          placeholder_text = ''<span foreground="##928374">password...</span>'';
+          position = "0, 210";
           halign = "center";
           valign = "bottom";
         }

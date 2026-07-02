@@ -2,8 +2,8 @@
 {
   wayland.windowManager.hyprland.settings.exec-once = [
     # "hash dbus-update-activation-environment 2>/dev/null"
-    "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-    "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+    "dbus-update-activation-environment --all --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+    "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
 
     "hyprlock"
 
@@ -21,7 +21,7 @@
 
     "swaync &"
     "udiskie --automount --notify --smart-tray &"
-    "hyprctl setcursor Bibata-Modern-Ice 48 &"
+    "hyprctl setcursor Bibata-Modern-Ice 24 &"
     "init-wallpaper &"
 
     #tray icon support
@@ -33,7 +33,8 @@
     "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false"
     "[workspace 1 silent] zen-beta"
     "[workspace 2 silent] ghostty"
+    "[workspace 2 silent] Bluetooth Manager"
     "[workspace 3 silent] AyuGram"
-    "[workspace 4 silent] AmneziaVPN"
+    "[workspace 4 silent] Throne"
   ];
 }

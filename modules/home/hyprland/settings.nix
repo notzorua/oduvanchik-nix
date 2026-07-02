@@ -27,9 +27,8 @@
       gaps_out = 12;
       border_size = 2;
 
-      "col.active_border" = "rgb(98971A) rgb(CC241D) 45deg";
-      "col.inactive_border" = "0x00000000";
-    };
+      "col.active_border" = "rgb(504945) rgb(7C6F64) rgb(A89984) rgb(7C6F64) 45deg";
+      "col.inactive_border" = "rgb(282828)";    };
 
     misc = {
       disable_hyprland_logo = true;
@@ -52,31 +51,26 @@
     };
 
     decoration = {
-      rounding = 0;
+      rounding = 8;  # ← было 0, теперь скругление
 
       blur = {
         enabled = true;
-
         size = 3;
-        noise = 0;
+        noise = 0.05;
         passes = 2;
-        contrast = 1.4;
-        brightness = 1;
-
-        xray = true;
+        contrast = 1.2;
+        brightness = 0.9;
+        xray = false;  # ← выключи xray для красивого блюра
       };
 
       shadow = {
         enabled = true;
-
-        range = 20;
-        render_power = 3;
-
-        offset = "0 2";
-        color = "rgba(00000055)";
+        range = 30;
+        render_power = 4;
+        offset = "0 4";
+        color = "rgba(00000088)";  # ← потемнее тень
       };
     };
-
     animations = {
       enabled = true;
 
@@ -85,30 +79,36 @@
         "easeOutCirc, 0, 0.55, 0.45, 1"
         "easeOutCubic, 0.33, 1, 0.68, 1"
         "fade_curve, 0, 0.55, 0.45, 1"
+        "easeInOutBack, 0.68, -0.6, 0.32, 1.6"
+        "bounce, 0.175, 0.885, 0.32, 1.275"
       ];
 
       animation = [
-        # name, enable, speed, curve, style
+    # Окна открываются снизу с пружиной
+        "windowsIn,   1, 4, bounce, popin 60%"
+    # Окна закрываются с затуханием
+        "windowsOut,  1, 3, easeOutCubic, popin 80%"
+    # Перемещение окон
+        "windowsMove, 1, 3, easeInOutBack, slide"
 
-        # Windows
-        "windowsIn,   0, 4, easeOutCubic,  popin 20%" # window open
-        "windowsOut,  0, 4, fluent_decel,  popin 80%" # window close.
-        "windowsMove, 1, 2, fluent_decel, slide" # everything in between, moving, dragging, resizing.
+    # Fade
+        "fadeIn,      1, 3, fade_curve"
+        "fadeOut,     1, 3, fade_curve"
+        "fadeSwitch,  1, 2, easeOutCirc"
+        "fadeShadow,  1, 6, easeOutCirc"
+        "fadeDim,     1, 4, fluent_decel"
 
-        # Fade
-        "fadeIn,      1, 3,   fade_curve" # fade in (open) -> layers and windows
-        "fadeOut,     1, 3,   fade_curve" # fade out (close) -> layers and windows
-        "fadeSwitch,  0, 1,   easeOutCirc" # fade on changing activewindow and its opacity
-        "fadeShadow,  1, 10,  easeOutCirc" # fade on changing activewindow for shadows
-        "fadeDim,     1, 4,   fluent_decel" # the easing of the dimming of inactive windows
-        # "border,      1, 2.7, easeOutCirc"  # for animating the border's color switch speed
-        # "borderangle, 1, 30,  fluent_decel, once" # for animating the border's gradient angle - styles: once (default), loop
-        "workspaces,  1, 4,   easeOutCubic, fade" # styles: slide, slidevert, fade, slidefade, slidefadevert
+        # Анимация бордера
+        "border,      1, 3, easeOutCirc"
+        "borderangle, 1, 60, fluent_decel, loop"
+
+        # Переключение воркспейсов со слайдом
+        "workspaces,  1, 4, easeOutCubic, slidefade 30%"
       ];
     };
-
     xwayland = {
       force_zero_scaling = true;
     };
   };
 }
+	 

@@ -22,8 +22,7 @@
       background-opacity = 0.5;
       adjust-cursor-thickness = 1;
 
-      selection-clear-on-copy = true;
-      mouse-hide-while-typing = true;
+      mouse-hide-while-typing = false;
 
       ##### Window #####;
       window-padding-balance = true;
@@ -48,6 +47,9 @@
       clipboard-read = "allow";
       clipboard-write = "allow";
       clipboard-paste-protection = false;
+
+      mouse-scroll-multiplier = 3;
+      selection-clear-on-copy = false;
 
       ##### Keybinds #####
       keybind = [

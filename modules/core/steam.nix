@@ -3,11 +3,11 @@
   programs = {
     steam = {
       enable = true;
-
       gamescopeSession.enable = true;
-
       extraCompatPackages = [ pkgs.proton-ge-bin ];
-      package = pkgs.millennium-steam;
+      
+      # Временно используем стандартный Steam, чтобы исключить влияние Millennium
+      package = pkgs.steam; 
     };
 
     gamescope = {
@@ -22,4 +22,10 @@
 
   hardware.steam-hardware.enable = true;
   services.joycond.enable = true;
+
+  # Для новых версий NixOS используем hardware.graphics
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true; # Критично для Proton!
+  };
 }

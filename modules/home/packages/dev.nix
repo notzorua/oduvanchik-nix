@@ -32,6 +32,8 @@
     rustc
     rustfmt
     # rustup
+    
+    go
 
     ## Python
     python3

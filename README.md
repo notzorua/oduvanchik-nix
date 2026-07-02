@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌼 oduvanchik-nix
+#oduvanchik-nix
 
 [![Stars](https://img.shields.io/github/stars/iZ0rua/oduvanchik-nix?color=FABD2F&labelColor=282828&style=for-the-badge&logo=starship&logoColor=FABD2F)](https://github.com/iZ0rua/oduvanchik-nix/stargazers)
 [![Repo size](https://img.shields.io/github/repo-size/iZ0rua/oduvanchik-nix?color=FE8019&labelColor=282828&style=for-the-badge&logo=github&logoColor=FE8019)](https://github.com/iZ0rua/oduvanchik-nix)
@@ -8,9 +8,9 @@
 
 </div>
 
-Мой конфиг NixOS + Hyprland. Начал не так давно, поэтому местами всё ещё разбираюсь на ходу — этот репозиторий вырос из форка [adarkaz/nixos-configuration](https://github.com/adarkaz/nixos-configuration), которым я пользуюсь и постепенно допиливаю под себя.
+Мой конфиг NixOS + Hyprland. Этот репозиторий вырос из форка [adarkaz/nixos-configuration](https://github.com/adarkaz/nixos-configuration), которым я пользуюсь и постепенно допиливаю под себя.
 
-Гарантий никаких не даю. Работает у меня, на моей машине — если у тебя что-то отвалится после копирования, это нормально, читай код перед тем как тащить к себе.
+Конфиг великолепный, крутой и лучший и ещё вооот такой
 
 ```
                     .  *   .    *  .
@@ -104,6 +104,6 @@ sudo nixos-rebuild switch --flake .#desktop
 
 ---
 
-Ну и раз уж тема с зелёными квадратиками — вот змейка, которая их поедает, обновляется сама раз в сутки:
+Змейка. ЗМЕЙКА:
 
 ![snake](https://raw.githubusercontent.com/iZ0rua/oduvanchik-nix/output/github-contribution-grid-snake.svg)

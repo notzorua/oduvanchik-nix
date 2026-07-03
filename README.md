@@ -105,3 +105,4 @@ sudo nixos-rebuild switch --flake .#desktop
 
 ![snake](https://raw.githubusercontent.com/iZ0rua/oduvanchik-nix/output/github-contribution-grid-snake.svg)
 
+

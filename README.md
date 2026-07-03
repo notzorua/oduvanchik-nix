@@ -104,3 +104,4 @@ sudo nixos-rebuild switch --flake .#desktop
 Змейка. ЗМЕЙКА:
 
 ![snake](https://raw.githubusercontent.com/iZ0rua/oduvanchik-nix/output/github-contribution-grid-snake.svg)
+

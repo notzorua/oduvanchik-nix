@@ -16,5 +16,7 @@
     asciiquarium-transparent
     protontricks
     chromium
+    gh
+    obsidian
   ];
 }

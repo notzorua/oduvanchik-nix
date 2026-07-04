@@ -18,5 +18,6 @@
     chromium
     gh
     obsidian
+    virt-manager
   ];
 }

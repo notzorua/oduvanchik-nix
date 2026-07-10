@@ -20,5 +20,6 @@
     obsidian
     virt-manager
     tesseract
+    cool-retro-term
   ];
 }

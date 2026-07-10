@@ -55,6 +55,7 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        config.cudaSupport = true;
       };
       lib = nixpkgs.lib;
     in

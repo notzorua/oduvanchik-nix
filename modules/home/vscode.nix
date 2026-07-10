@@ -21,5 +21,6 @@
     virt-manager
     tesseract
     cool-retro-term
+    (pkgs.ollama.override { acceleration = "cuda"; })
   ];
 }

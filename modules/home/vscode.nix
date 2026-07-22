@@ -25,5 +25,6 @@
     tesseract
     cool-retro-term
     yazi
+    hyprshade
   ];
 }

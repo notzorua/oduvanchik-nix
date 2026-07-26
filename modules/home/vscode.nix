@@ -26,5 +26,6 @@
     cool-retro-term
     yazi
     hyprshade
+    qbittorrent
   ];
 }

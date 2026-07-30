@@ -27,5 +27,6 @@
     yazi
     hyprshade
     qbittorrent
+    mangohud
   ];
 }

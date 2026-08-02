@@ -37,7 +37,7 @@
       nfu = "nh-notify nh os switch --update";
       nsearch = "nh search";
 
-      nixup = "(builtin cd ~/nixos-configuration && git add -A && nh-notify nh os switch .)";
+      nixup = "builtin cd ~/nixos-configuration && git add -A && nh os switch .";
       nixupd = "(builtin cd ~/nixos-configuration && git add -A && nh-notify nh os switch --update .)";
       # python
       piv = "python -m venv .venv";

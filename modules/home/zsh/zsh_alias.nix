@@ -26,7 +26,7 @@
       tree = "eza --icons --tree --group-directories-first";
 
       # Nixos
-      cdnix = "cd ~/nixos-config && codium ~/nixos-config";
+      cdnix = "builtin cd ~/nixos-configuration && codium ~/nixos-configuration";
       ns = "nom-shell --run zsh";
       nsp = "nom-shell --run zsh -p";
       nd = "nom develop --command zsh";
@@ -37,6 +37,8 @@
       nfu = "nh-notify nh os switch --update";
       nsearch = "nh search";
 
+      nixup = "(builtin cd ~/nixos-configuration && git add -A && nh-notify nh os switch .)";
+      nixupd = "(builtin cd ~/nixos-configuration && git add -A && nh-notify nh os switch --update .)";
       # python
       piv = "python -m venv .venv";
       psv = "source .venv/bin/activate";

@@ -44,7 +44,7 @@
     python3Packages.python-lsp-server
     python3Packages.python-lsp-jsonrpc
     python3Packages.python-lsp-black
-    python3Packages.python-lsp-ruff
+   #python3Packages.python-lsp-ruff    # временно: не собирается, тесты не проходят с ruff 0.16
     python3Packages.pyls-isort
     python3Packages.pyls-flake8
     python3Packages.flake8

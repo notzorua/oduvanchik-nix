@@ -26,7 +26,7 @@
       "ALT, Escape, exec, hyprlock"
       "$mod SHIFT, Escape, exec, power-menu"
       "$mod, P, pseudo,"
-      "$mod, X, togglesplit,"
+      "$mod, X, layoutmsg, togglesplit"
       "$mod, T, exec, toggle-oppacity"
       "$mod, E, exec, nemo"
       "ALT, E, exec, hyprctl dispatch exec '[float; size 1111 700] nemo'"

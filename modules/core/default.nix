@@ -6,7 +6,6 @@
     ./hardware.nix
     ./xserver.nix
     ./network.nix
-    ./genshin.nix
     ./bluetooth.nix
     ./davinchi.nix
     ./nh.nix

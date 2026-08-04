@@ -177,6 +177,24 @@
         zle -N zle-line-finish
       fi
 
+      # Обновление зависимостей с проверкой перед сборкой.
+      # flakeguard смотрит только изменившиеся инпуты; если нашёл проблему,
+      # flake.lock возвращается на место и система не трогается.
+      nixupd() {
+        local dir=~/nixos-configuration
+        cp "$dir/flake.lock" "$dir/flake.lock.bak" || return 1
+        nix flake update --flake "$dir"
+
+        if ! flakeguard --diff "$dir/flake.lock.bak" "$dir/flake.lock"; then
+          mv "$dir/flake.lock.bak" "$dir/flake.lock"
+          echo "flakeguard: обновление откачено."
+          return 1
+        fi
+
+        rm -f "$dir/flake.lock.bak"
+        git -C "$dir" add -A
+        nh os switch "$dir"
+      }
     '';
   };
 

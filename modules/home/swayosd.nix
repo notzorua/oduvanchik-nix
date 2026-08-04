@@ -11,8 +11,8 @@
         ", XF86AudioMicMute, exec, toggle-mic"
       ];
       bindl = [
-        "$mod, XF86MonBrightnessUp, exec, swayosd-client --brightness 100"
-        "$mod, XF86MonBrightnessDown, exec, swayosd-client --brightness 0"
+        "SUPER, XF86MonBrightnessUp, exec, swayosd-client --brightness 100"
+        "SUPER, XF86MonBrightnessDown, exec, swayosd-client --brightness 0"
       ];
       bindel = [
         ", XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
@@ -22,8 +22,8 @@
         ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume +2"
         ", XF86AudioLowerVolume, exec, swayosd-client --output-volume -2"
 
-        "$mod, f11, exec, swayosd-client --output-volume +2"
-        "$mod, f12, exec, swayosd-client --output-volume -2"
+        "SUPER, f11, exec, swayosd-client --output-volume +2"
+        "SUPER, f12, exec, swayosd-client --output-volume -2"
       ];
       bindr = [
         "CAPS, Caps_Lock, exec, swayosd-client --caps-lock"

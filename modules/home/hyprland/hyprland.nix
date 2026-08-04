@@ -21,7 +21,7 @@
   ];
   wayland.windowManager.hyprland = {
     enable = true;
-    configType = "hyprlang";   # временно: конфиг в старом синтаксисе, не в Lua
+    configType = "hyprlang";
     package = null;
     portalPackage = null;
 

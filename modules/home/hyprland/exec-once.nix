@@ -3,6 +3,7 @@
   wayland.windowManager.hyprland.settings.exec-once = [
     "dbus-update-activation-environment --all --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
     "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+
     "hyprlock"
     "nm-applet &"
     "poweralertd &"

@@ -25,7 +25,8 @@
         enable = true;
         device = "nodev"; # Required for UEFI
         efiSupport = true;
-        useOSProber = true; # Automatically finds Windows/other OSs
+        useOSProber = false;
+        configurationLimit = 10;
         
         theme = let
           colorsheme = "night";

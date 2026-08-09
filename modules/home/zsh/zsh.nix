@@ -135,6 +135,8 @@
       setopt hist_find_no_dups
       setopt hist_expire_dups_first
       setopt hist_verify
+      setopt interactive_comments
+      setopt hist_fcntl_lock
 
       source ~/.p10k.zsh
 

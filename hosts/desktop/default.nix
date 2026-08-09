@@ -26,18 +26,11 @@
 
   networking.firewall.trustedInterfaces = [ "virbr0" ];
 
-  systemd.services.fix-boot-order = {
-    description = "Reassert EFI boot order to keep NixOS first";
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.efibootmgr}/bin/efibootmgr -o 0001,0000,0002";
-    };
-  };
-programs.nix-ld.enable = true;
-programs.nix-ld.libraries = with pkgs; [
-  stdenv.cc.cc.lib
-  zlib
-];
-nixpkgs.overlays = [ inputs.millennium.overlays.default ];
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
+    zlib
+  ];
+
+  nixpkgs.overlays = [ inputs.millennium.overlays.default ];
 }

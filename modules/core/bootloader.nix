@@ -23,16 +23,20 @@
       # 2. Enable GRUB for UEFI
       grub = {
         enable = true;
-        device = "nodev"; # Required for UEFI
+        device = "nodev";
         efiSupport = true;
         useOSProber = false;
         configurationLimit = 10;
-        
-        theme = let
-          colorsheme = "night";
-          layout = "teleport";
-          resolution = "1920x1080";
-        in inputs.grubshin-bootpact.packages.${pkgs.stdenv.hostPlatform.system}.${colorsheme}.${layout}.${resolution};
+
+        theme = pkgs.runCommand "oneshot-grub-theme" { } ''
+          mkdir -p $out
+          tar xzf ${pkgs.fetchurl {
+            url = "https://raw.githubusercontent.com/Maplesyrup2080/oneshot-grub-theme/6a0c69cbc559ce56d810fe82930a9a75e153f553/niko-theme.tar.gz";
+            hash = "sha256-x8qZNVNZeLScrpPTKKbEsIVbiyniXRztPjPgC/gvh6o=";
+          }} -C $out --strip-components=1
+        '';
+
+        gfxmodeEfi = "2560x1440";
       };
 
       # 3. Keep EFI settings

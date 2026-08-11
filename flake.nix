@@ -29,6 +29,10 @@
     #nixvim.url = "github:dc-tec/nixvim";
     #grub theme
     grubshin-bootpact.url = "github:max-ishere/grubshin-bootpact";
+    bootcheck = {
+      url = "github:notzorua/bootcheck";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {

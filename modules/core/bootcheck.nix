@@ -1,8 +1,7 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 {
-  # Проверка загрузчика перед перезагрузкой.
-  # Исходники лежат в pkgs/bootcheck, там же описание сборки.
+  # Bootloader check, source lives at github.com/notzorua/bootcheck
   environment.systemPackages = [
-    (pkgs.callPackage ../../pkgs/bootcheck { })
+    inputs.bootcheck.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }

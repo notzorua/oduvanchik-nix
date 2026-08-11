@@ -27,5 +27,6 @@
     hyprshade
     qbittorrent
     mangohud
+    ayugram-desktop
   ];
 }

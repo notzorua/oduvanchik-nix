@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "bootcheck": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786457853,
+        "narHash": "sha256-gYWGiPKnF3LcNQDwtN3gtZeqkqIwZ6VPKTClIW6E3h8=",
+        "owner": "notzorua",
+        "repo": "bootcheck",
+        "rev": "6593268416cb1d7c3ec6e347bbeb113f4354e130",
+        "type": "github"
+      },
+      "original": {
+        "owner": "notzorua",
+        "repo": "bootcheck",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -372,11 +392,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1785692966,
-        "narHash": "sha256-vUfIeBEfpbAfZ5zjgIkYk7eHBeVfCYVjLbWnMkseYnk=",
+        "lastModified": 1786247143,
+        "narHash": "sha256-8S3Kcxs7D4UtxJxSJZz0m14CGhuW0MxfrIwJxeGWGnQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "643809054d65fdd466a63e3155b8c498cb483c04",
+        "rev": "279b4a8275f032c566576b3f181fa0f27197f588",
         "type": "github"
       },
       "original": {
@@ -439,6 +459,7 @@
     },
     "root": {
       "inputs": {
+        "bootcheck": "bootcheck",
         "grubshin-bootpact": "grubshin-bootpact",
         "home-manager": "home-manager",
         "maple-mono": "maple-mono",

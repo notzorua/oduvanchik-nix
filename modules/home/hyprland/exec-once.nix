@@ -12,7 +12,6 @@
     "wl-paste --type image --watch cliphist store &"
     "waybar &"
     "hyprtime watch"
-    "swaync &"
     "udiskie --automount --notify --smart-tray &"
     "hyprctl setcursor Bibata-Modern-Ice 24 &"
     "init-wallpaper &"

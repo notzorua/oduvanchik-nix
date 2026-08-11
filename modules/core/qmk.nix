@@ -6,7 +6,6 @@
     qmk
     qmk-udev-rules
 
-
     waydroid-helper
   ];
 
@@ -15,4 +14,8 @@
     vial
     qmk-udev-rules
   ];
+
+  # Правила udev от QMK написаны в расчёте на эту группу,
+  # в NixOS её по умолчанию нет.
+  users.groups.plugdev = { };
 }

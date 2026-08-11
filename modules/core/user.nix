@@ -28,6 +28,7 @@
       "networkmanager"
       "wheel"
       "input"
+      "plugdev"
     ];
     shell = pkgs.zsh;
   };

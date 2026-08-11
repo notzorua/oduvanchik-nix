@@ -3,6 +3,7 @@
   imports = [
     ./nixpkgs.nix
     ./bootloader.nix
+    ./bootcheck.nix
     ./hardware.nix
     ./xserver.nix
     ./network.nix

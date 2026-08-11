@@ -38,7 +38,7 @@
       nsearch = "nh search";
 
       nixup-profile = "NIXPKGS_ALLOW_UNFREE=1 nix profile upgrade --all --impure";
-      nixup = "builtin cd ~/nixos-configuration && git add -A && nh os switch .";
+      nixup = "builtin cd ~/nixos-configuration && git add -A && nh os switch . && sudo bootcheck";
       # python
       piv = "python -m venv .venv";
       psv = "source .venv/bin/activate";

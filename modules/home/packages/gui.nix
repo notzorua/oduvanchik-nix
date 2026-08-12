@@ -22,5 +22,8 @@
     popsicle
     mission-center # GUI resources monitor
     zenity
+    chromium
+    qbittorrent
+    virt-manager
   ];
 }

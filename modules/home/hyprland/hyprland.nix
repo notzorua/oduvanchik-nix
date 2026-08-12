@@ -15,6 +15,7 @@
     wayland
     direnv
     tesseract
+    hyprshade
   ];
   systemd.user.targets.hyprland-session.Unit.Wants = [
     "xdg-desktop-autostart.target"

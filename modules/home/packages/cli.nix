@@ -20,6 +20,7 @@
     binsider
     bitwise # cli tool for bit / hex manipulation
     broot # tree files view
+    yazi
     caligula # User-friendly, lightweight TUI for disk imaging
     hyperfine # benchmarking tool
     pastel # cli to manipulate colors
@@ -53,6 +54,7 @@
     lavat
     lolcat
     pipes
+    pipes-rs
     sl
     tty-clock
 

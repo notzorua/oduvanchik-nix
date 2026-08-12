@@ -39,6 +39,10 @@
 
     heroic-unwrapped
 
+    mangohud
+    protontricks
+    samrewritten
+
     ## Minecraft
     prismlauncher
 

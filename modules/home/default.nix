@@ -39,6 +39,6 @@
     
     ./telegram.nix                    # telegram
     ./unity.nix
-    ./vscode.nix                      # code editor    
+    ./vscodium.nix                    # code editor
   ];
 }

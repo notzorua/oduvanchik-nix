@@ -25,5 +25,6 @@
     chromium
     qbittorrent
     virt-manager
+    ayugram-desktop
   ];
 }

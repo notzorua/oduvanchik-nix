@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786552294,
-        "narHash": "sha256-N3uiBXwiY3M0PhTULJwRgbNHC9VZ7+U4UVqx7hxa8iE=",
+        "lastModified": 1786554694,
+        "narHash": "sha256-avBjw3qGdiD9lVFXp2sJayHTplDtLDdalmsHqSC6d0E=",
         "owner": "notzorua",
         "repo": "bootcheck",
-        "rev": "417c7cc1f87b444c430c48e864dd9480569a1379",
+        "rev": "884f773f4f37faa81a89d99fb941b4bd927276c3",
         "type": "github"
       },
       "original": {

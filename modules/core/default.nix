@@ -22,6 +22,7 @@
     ./wayland.nix
     ./virtualization.nix
     ./qmk.nix
+    ./ollama.nix
   ];
 
   # This adds the package to your global system environment

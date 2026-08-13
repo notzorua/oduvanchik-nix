@@ -30,5 +30,7 @@
     http_proxy = "http://127.0.0.1:2080";
     https_proxy = "http://127.0.0.1:2080";
     all_proxy = "socks5://127.0.0.1:2080";    
+    no_proxy = "127.0.0.1,localhost,::1";
+    NO_PROXY = "127.0.0.1,localhost,::1";
   };
 }

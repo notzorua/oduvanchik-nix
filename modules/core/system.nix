@@ -3,7 +3,7 @@
   # imports = [ inputs.nix-gaming.nixosModules.default ];
   nix = {
     settings = {
-      trusted-users = [ "swd" ];
+      trusted-users = [ "zoroa" ];
       auto-optimise-store = true;
       experimental-features = [
         "nix-command"
@@ -40,6 +40,8 @@
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "26.05";
+
+  time.hardwareClockInLocalTime = true;
 
   swapDevices = [
     {

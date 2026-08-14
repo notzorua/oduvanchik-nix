@@ -9,7 +9,7 @@
         enable = true;
         device = "nodev";
         efiSupport = true;
-        useOSProber = false;
+        useOSProber = true;
         configurationLimit = 10;
         theme = pkgs.runCommand "oneshot-grub-theme" { } ''
           mkdir -p $out

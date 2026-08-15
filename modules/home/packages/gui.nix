@@ -25,6 +25,7 @@
     chromium
     qbittorrent
     virt-manager
+    discord-canary
     ayugram-desktop
   ];
 }

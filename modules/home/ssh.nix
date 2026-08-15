@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.ssh = {
     enable = true;
@@ -28,6 +28,7 @@
         port = 443;
 	identityFile = "~/.ssh/id_ed25519";
         identitiesOnly = true;
+        proxyCommand = "${pkgs.netcat}/bin/nc -X connect -x 127.0.0.1:2080 %h %p";
       };
     };
   };

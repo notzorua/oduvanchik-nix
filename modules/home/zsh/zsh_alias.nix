@@ -42,6 +42,10 @@
       # python
       piv = "python -m venv .venv";
       psv = "source .venv/bin/activate";
+
+      warpup = "sudo systemctl start amneziawg-awg0";
+      warpdown = "sudo systemctl stop amneziawg-awg0";
+      warpstat = "curl -s https://www.cloudflare.com/cdn-cgi/trace | grep -E 'warp=|ip='";
     };
   };
 }

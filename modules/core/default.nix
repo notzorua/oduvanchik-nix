@@ -23,6 +23,7 @@
     ./virtualization.nix
     ./qmk.nix
     ./ollama.nix
+    ./amneziawg.nix
   ];
 
   # This adds the package to your global system environment

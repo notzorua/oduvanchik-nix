@@ -40,8 +40,8 @@ in
       package = pkgs.papirus-icon-theme.override { color = "green"; };
     };
     cursorTheme = {
-      name = "Bibata-Modern-Ice";
-      package = pkgs.bibata-cursors;
+      name = "Qogir-Light";
+      package = pkgs.qogir-icon-theme;
       size = 48;
     };
 
@@ -72,8 +72,17 @@ in
 
   home.pointerCursor = {
     enable = true;
-    name = "Bibata-Modern-Ice";
-    package = pkgs.bibata-cursors;
+    name = "Qogir-Light";
+    package = pkgs.qogir-icon-theme;
     size = 48;
+    gtk.enable = true;
+    x11 = {
+      enable = true;
+      defaultCursor = "left_ptr";
+    };
+  };
+  xresources.properties = {
+    "Xcursor.size" = 48;
+    "Xcursor.theme" = "Qogir-Light";
   };
 }

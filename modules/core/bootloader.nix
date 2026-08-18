@@ -28,7 +28,7 @@
 
     # 4. Boot splash
     plymouth = {
-      enable = true;
+      enable = false;
       theme = "spin";
       themePackages = [
         # The package ships ~100 themes; keeping only the one in use

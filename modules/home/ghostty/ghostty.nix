@@ -10,7 +10,7 @@
         "Maple Mono"
         # "DejaVu Sans"
       ];
-      size = 16;
+      font-size = 16;
       font-feature = [
         "calt"
         "cv66"

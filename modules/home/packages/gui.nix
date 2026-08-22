@@ -32,5 +32,8 @@
     github-desktop
     bottles
     github-desktop
+    tor-browser
+    librewolf
+    qutebrowser
   ];
 }

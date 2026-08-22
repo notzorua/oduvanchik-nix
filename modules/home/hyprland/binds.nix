@@ -18,7 +18,6 @@
       "SUPER, Q, killactive,"
       "SUPER, F, fullscreen, 0"
       "SUPER SHIFT, F, fullscreenstate, 2"
-      "SUPER SHIFT, F, fullscreen, 1"
       "SUPER, Space, exec, toggle-float"
       "SUPER, D, exec, toggle-rofi rofi -show drun"
       "SUPER SHIFT, D, exec, vesktop --enable-features=UseOzonePlatform --ozone-platform=wayland"

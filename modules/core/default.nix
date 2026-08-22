@@ -24,6 +24,7 @@
     ./qmk.nix
     ./ollama.nix
     ./amneziawg.nix
+    ./own-tools.nix
   ];
 
   # This adds the package to your global system environment

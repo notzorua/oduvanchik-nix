@@ -27,5 +27,10 @@
     virt-manager
     discord-canary
     ayugram-desktop
+    osu-lazer-bin
+    bottles
+    github-desktop
+    bottles
+    github-desktop
   ];
 }

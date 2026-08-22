@@ -33,6 +33,15 @@
       url = "github:notzorua/bootcheck";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flakeguard = {
+      url = "github:notzorua/flakeguard";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprtime = {
+      url = "github:notzorua/hyprtime";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {

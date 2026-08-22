@@ -75,6 +75,26 @@
         "type": "github"
       }
     },
+    "flakeguard": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785835680,
+        "narHash": "sha256-AjVWBJz6MFldg5XHlUqGLlslSR5N75UKckmy9FySTSE=",
+        "owner": "notzorua",
+        "repo": "flakeguard",
+        "rev": "bcd20621594aa79332bf108fe4a1b2e708014cca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "notzorua",
+        "repo": "flakeguard",
+        "type": "github"
+      }
+    },
     "git-hooks": {
       "inputs": {
         "flake-compat": [
@@ -180,6 +200,26 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "hyprtime": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785963038,
+        "narHash": "sha256-CICD3q52pu3b18j4iwhdETGY/TLYJsxz5nRGhUlQOp4=",
+        "owner": "notzorua",
+        "repo": "hyprtime",
+        "rev": "d7d4b8481628ad80cdf7721daad479f143c0a8c0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "notzorua",
+        "repo": "hyprtime",
         "type": "github"
       }
     },
@@ -460,8 +500,10 @@
     "root": {
       "inputs": {
         "bootcheck": "bootcheck",
+        "flakeguard": "flakeguard",
         "grubshin-bootpact": "grubshin-bootpact",
         "home-manager": "home-manager",
+        "hyprtime": "hyprtime",
         "maple-mono": "maple-mono",
         "millennium": "millennium",
         "nix-flatpak": "nix-flatpak",

@@ -11,6 +11,9 @@
       "8.8.4.4"
       "1.1.1.1"
     ];
+    extraHosts = ''
+      203.14.32.179 de.anonch.net
+    '';
     firewall = {
       #trustedInterfaces = [ "waydroid0" ];
       enable = true;

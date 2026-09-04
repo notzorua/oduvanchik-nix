@@ -23,6 +23,7 @@ in
     noto-fonts-color-emoji
     fantasque-sans-mono
     maple-mono-custom
+    corefonts
   ];
 
   gtk = {

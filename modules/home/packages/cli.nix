@@ -82,5 +82,6 @@
     wget
     wl-clipboard # clipboard utils for wayland (wl-copy, wl-paste)
     xdg-utils
+    usbutils
   ];
 }

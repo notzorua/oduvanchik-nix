@@ -6,6 +6,6 @@
 }:
 {
   environment.systemPackages = with pkgs; [
-    davinci-resolve
+#    davinci-resolve
   ];
 }

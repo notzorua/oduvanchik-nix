@@ -9,7 +9,6 @@
     vtsls
     typescript
 
-    gemini-cli-bin
     claude-code
 
     ## formating

@@ -15,7 +15,6 @@
     libsm # (formerly xorg.libSM)
 
     claude-code
-    gemini-cli
 
     libadwaita
     gtk4

@@ -6,8 +6,8 @@
 Личный NixOS flake (форк adarkaz ← Frost-Phoenix). NixOS unstable (26.11), Hyprland, home-manager, тема Gruvbox Dark Hard.
 
 Хосты в `flake.nix` → `nixosConfigurations`:
-- **desktop** — MSI PRO B760-P WIFI, i5-12400F, 32 ГБ, RTX 4060 (`nvidia-open`), NVMe 954 ГБ. Dual-boot с Windows 11 (GRUB, `useOSProber = true`, `time.hardwareClockInLocalTime = true`).
-- **fluff** — новый ноутбук, AMD, btrfs (~477 ГБ, без subvolume), отдельный swap 15.5 ГБ. Установка через `nixos-install --flake .#fluff`, завершение не подтверждено.
+- **stem** (бывший desktop) — MSI PRO B760-P WIFI, i5-12400F, 32 ГБ, RTX 4060 (`nvidia-open`), NVMe 954 ГБ. Dual-boot с Windows 11 (GRUB, `useOSProber = true`, `time.hardwareClockInLocalTime = true`).
+- **fluff** — ноутбук ASUS, AMD, btrfs (~477 ГБ, без subvolume), отдельный swap 15.5 ГБ. Установлен и загружается, донастройка продолжается (`services.asusd` для подсветки клавиатуры уже добавлен).
 
 Важные места:
 - `modules/core/` — системные модули (`steam.nix`, `nixpkgs.nix`, `services.nix`, `davinchi.nix`, `bootloader.nix`, …)
@@ -40,9 +40,9 @@
 - Если после падения Throne не работает DNS — остались его `ip rule` (fwmark 0x2023/0x2024, таблица 51820): `ip rule list`, удалить лишние, или перезагрузиться.
 
 ## Открытые задачи
-1. **fluff**: подтвердить установку, задать пароль, первая загрузка. Затем: раскомментировать `./spicetify.nix` (`modules/home/default.nix`), настроить Throne постоянно (`programs.throne`), докачать `discord-canary` и C#-расширение VSCodium, донастроить ноут (батарея/tlp, Wi-Fi, тачпад, разрешение в Hyprland).
+1. **fluff**: установлен и загружается (хост переименован desktop→stem, fluff добавлен, `services.asusd` для подсветки клавиатуры настроен). Осталось: раскомментировать `./spicetify.nix` (`modules/home/default.nix`), настроить Throne постоянно (`programs.throne`), докачать `discord-canary` и C#-расширение VSCodium, донастроить ноут (батарея/tlp, Wi-Fi, тачпад, разрешение в Hyprland).
 2. **DaVinci Resolve** закомментирован в `modules/core/davinchi.nix` — ждёт PR nixpkgs #562336 (фикс хеша).
-3. `gemini-cli` / `gemini-cli-bin` помечены на удаление из nixpkgs — убрать из конфига.
+3. ~~`gemini-cli` / `gemini-cli-bin` убраны из конфига~~ (сделано).
 4. Перегенерировать приватный ключ WARP (засвечен ранее).
 5. Waybar: перевести на systemd user service или добавить перезапуск в `nixup`.
 6. BIOS не обновлён (прошивка 10.2023), память на 2133 МГц без XMP.

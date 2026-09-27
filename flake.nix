@@ -61,11 +61,19 @@
     in
     {
       nixosConfigurations = {
-        desktop = nixpkgs.lib.nixosSystem {
+        stem = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ ./hosts/desktop ];
+          modules = [ ./hosts/stem ];
           specialArgs = {
-            host = "desktop";
+            host = "stem";
+            inherit self inputs username;
+          };
+        };
+        fluff = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [ ./hosts/fluff ];
+          specialArgs = {
+            host = "fluff";
             inherit self inputs username;
           };
         };

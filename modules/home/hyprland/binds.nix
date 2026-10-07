@@ -36,6 +36,7 @@
       "SUPER, N, exec, swaync-client -t -sw"
       "CTRL SHIFT, Escape, exec, hyprctl dispatch exec '[workspace 9] missioncenter'"
       "SUPER, equal, exec, woomer"
+      "SUPER ALT, S, exec, pkill -x orca || orca" # toggle Orca screen reader
       # "SUPER SHIFT, W, exec, vm-start"
 
       # screenshot      # OCR

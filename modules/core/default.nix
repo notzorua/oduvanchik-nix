@@ -22,9 +22,10 @@
     ./wayland.nix
     ./virtualization.nix
     ./qmk.nix
-    ./ollama.nix
+#    ./ollama.nix
     ./amneziawg.nix
     ./own-tools.nix
+    ./accessibility.nix
   ];
 
   # This adds the package to your global system environment

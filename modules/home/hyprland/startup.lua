@@ -36,10 +36,8 @@ local services = {
 local apps = {
 	{ "zen-beta", "1 silent" },
 	{ "ghostty", "2 silent" },
-	-- Так было и раньше: команда «Bluetooth Manager» запускает программу «Bluetooth»
-	-- с аргументом «Manager». Похоже на опечатку (возможно, имелся в виду blueman-manager) —
-	-- оставлено как было, решить отдельно.
-	{ "Bluetooth Manager", "2 silent" },
+	-- Было «Bluetooth Manager» — программа «Bluetooth» с аргументом «Manager», не запускалась.
+	{ "blueman-manager", "2 silent" },
 	{ "AyuGram", "3 silent" },
 	{ "Throne", "4 silent" },
 }

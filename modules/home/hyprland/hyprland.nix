@@ -22,7 +22,9 @@
   ];
   wayland.windowManager.hyprland = {
     enable = true;
-    configType = "hyprlang";
+    # Конфиг на Lua: ~/.config/hypr/hyprland.lua + подключаемые файлы (binds, rules, startup…).
+    # В Hyprland 0.57 поддержку hyprland.conf убирают.
+    configType = "lua";
     package = null;
     portalPackage = null;
 

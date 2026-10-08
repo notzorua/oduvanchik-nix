@@ -13,28 +13,35 @@
     	return hl.dsp.exec_cmd("swayosd-client " .. args)
     end
 
+    -- description — для списка привязок (show-keybinds).
+    local function bind(keys, description, dispatcher, opts)
+    	opts = opts or {}
+    	opts.description = description
+    	return hl.bind(keys, dispatcher, opts)
+    end
+
     -- Сервер всплывающих индикаторов. Было: exec-once = [ "swayosd-server" ].
     hl.on("hyprland.start", function()
     	hl.exec_cmd("swayosd-server")
     end)
 
-    hl.bind("XF86AudioMute", osd("--output-volume mute-toggle"))
-    hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("toggle-mic"))
+    bind("XF86AudioMute", "звук: выключить/включить", osd("--output-volume mute-toggle"))
+    bind("XF86AudioMicMute", "микрофон: выключить/включить", hl.dsp.exec_cmd("toggle-mic"))
 
-    hl.bind("SUPER + XF86MonBrightnessUp", osd("--brightness 100"), { locked = true })
-    hl.bind("SUPER + XF86MonBrightnessDown", osd("--brightness 0"), { locked = true })
+    bind("SUPER + XF86MonBrightnessUp", "яркость: максимум", osd("--brightness 100"), { locked = true })
+    bind("SUPER + XF86MonBrightnessDown", "яркость: минимум", osd("--brightness 0"), { locked = true })
 
-    hl.bind("XF86MonBrightnessUp", osd("--brightness raise"), { locked = true, repeating = true })
-    hl.bind("XF86MonBrightnessDown", osd("--brightness lower"), { locked = true, repeating = true })
+    bind("XF86MonBrightnessUp", "яркость: больше", osd("--brightness raise"), { locked = true, repeating = true })
+    bind("XF86MonBrightnessDown", "яркость: меньше", osd("--brightness lower"), { locked = true, repeating = true })
 
-    hl.bind("XF86AudioRaiseVolume", osd("--output-volume +2"), { repeating = true })
-    hl.bind("XF86AudioLowerVolume", osd("--output-volume -2"), { repeating = true })
-    hl.bind("SUPER + f11", osd("--output-volume +2"), { repeating = true })
-    hl.bind("SUPER + f12", osd("--output-volume -2"), { repeating = true })
+    bind("XF86AudioRaiseVolume", "громкость: больше", osd("--output-volume +2"), { repeating = true })
+    bind("XF86AudioLowerVolume", "громкость: меньше", osd("--output-volume -2"), { repeating = true })
+    bind("SUPER + f11", "громкость: больше", osd("--output-volume +2"), { repeating = true })
+    bind("SUPER + f12", "громкость: меньше", osd("--output-volume -2"), { repeating = true })
 
-    hl.bind("CAPS + Caps_Lock", osd("--caps-lock"), { release = true })
-    hl.bind("Scroll_Lock", osd("--scroll-lock"), { release = true })
-    hl.bind("Num_Lock", osd("--num-lock"), { release = true })
+    bind("CAPS + Caps_Lock", "индикатор Caps Lock", osd("--caps-lock"), { release = true })
+    bind("Scroll_Lock", "индикатор Scroll Lock", osd("--scroll-lock"), { release = true })
+    bind("Num_Lock", "индикатор Num Lock", osd("--num-lock"), { release = true })
   '';
 
   xdg.configFile."swayosd/config.toml".text = ''

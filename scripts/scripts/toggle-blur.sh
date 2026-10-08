@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-if hyprctl getoption decoration:blur:enabled | grep "int: 1" > /dev/null; then
-    hyprctl keyword decoration:blur:enabled false > /dev/null
-else
-    hyprctl keyword decoration:blur:enabled true > /dev/null
-fi
+# В Lua-режиме «hyprctl keyword» не работает, а getoption отвечает «bool: true», а не «int: 1».
+# Поэтому переключаем прямо в Lua: прочитать значение и записать обратное.
+hyprctl eval 'hl.config({ decoration = { blur = { enabled = not hl.get_config("decoration.blur.enabled") } } })' > /dev/null

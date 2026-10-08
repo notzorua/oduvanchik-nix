@@ -1,5 +1,9 @@
 { host, ... }:
 let
+  # btop в плавающем окне по центру. В Lua-режиме Hyprland «hyprctl dispatch X» выполняет
+  # Lua: hl.dispatch(X). Было: hyprctl dispatch exec '[float; center; size 950 650] kitty …'.
+  btop = "hyprctl dispatch 'hl.dsp.exec_cmd(\"kitty --override font_size=14 --title float_kitty btop\", { float = true, center = true, size = \"950 650\" })'";
+
   custom = {
     font = "Maple Mono";
     font_size = "18px";
@@ -96,19 +100,19 @@ in
       format = "<span foreground='${green}'> </span> {usage}%";
       format-alt = "<span foreground='${green}'> </span> {avg_frequency} GHz";
       interval = 2;
-      on-click-right = "hyprctl dispatch exec '[float; center; size 950 650] kitty --override font_size=14 --title float_kitty btop'";
+      on-click-right = btop;
     };
     memory = {
       format = "<span foreground='${cyan}'>󰟜 </span>{}%";
       format-alt = "<span foreground='${cyan}'>󰟜 </span>{used} GiB"; # 
       interval = 2;
-      on-click-right = "hyprctl dispatch exec '[float; center; size 950 650] kitty --override font_size=14 --title float_kitty btop'";
+      on-click-right = btop;
     };
     disk = {
       # path = "/";
       format = "<span foreground='${orange}'>󰋊 </span>{percentage_used}%";
       interval = 60;
-      on-click-right = "hyprctl dispatch exec '[float; center; size 950 650] kitty --override font_size=14 --title float_kitty btop'";
+      on-click-right = btop;
     };
     network = {
       format-wifi = "<span foreground='${magenta}'> </span> {signalStrength}%";

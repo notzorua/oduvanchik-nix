@@ -31,11 +31,9 @@
       # hidpi = true;
     };
 
-    extraConfig = ''
-    # Hide XWayland helper windows that have an empty title (common for Wine tray/menu helpers)
-    windowrule = match:xwayland true, match:title ^$, match:class ^$, match:initial_class ^$, match:initial_title ^$, opacity 0.0, float true, no_blur on
-    '';
-    
+    # Правило для пустых окон XWayland (было здесь, в extraConfig) — теперь в rules.lua:
+    # в Lua-режиме extraConfig вставляется как Lua, а не как строки hyprland.conf.
+
     # enableNvidiaPatches = false;
     systemd.enable = true;
   };

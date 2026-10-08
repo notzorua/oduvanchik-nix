@@ -2,36 +2,40 @@
 {
   home.packages = with pkgs; [ swayosd ];
 
-  wayland.windowManager.hyprland = {
-    settings = {
-      exec-once = [ "swayosd-server" ];
+  # Привязки громкости, яркости и индикаторов — на Lua (~/.config/hypr/swayosd.lua).
+  # Флаги старых списков стали опциями hl.bind:
+  #   binde  (повтор при удержании)          → { repeating = true }
+  #   bindl  (работает на экране блокировки) → { locked = true }
+  #   bindel (оба)                           → { locked = true, repeating = true }
+  #   bindr  (при отпускании клавиши)        → { release = true }
+  wayland.windowManager.hyprland.extraLuaFiles.swayosd.content = ''
+    local function osd(args)
+    	return hl.dsp.exec_cmd("swayosd-client " .. args)
+    end
 
-      bind = [
-        ", XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
-        ", XF86AudioMicMute, exec, toggle-mic"
-      ];
-      bindl = [
-        "SUPER, XF86MonBrightnessUp, exec, swayosd-client --brightness 100"
-        "SUPER, XF86MonBrightnessDown, exec, swayosd-client --brightness 0"
-      ];
-      bindel = [
-        ", XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
-        ", XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
-      ];
-      binde = [
-        ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume +2"
-        ", XF86AudioLowerVolume, exec, swayosd-client --output-volume -2"
+    -- Сервер всплывающих индикаторов. Было: exec-once = [ "swayosd-server" ].
+    hl.on("hyprland.start", function()
+    	hl.exec_cmd("swayosd-server")
+    end)
 
-        "SUPER, f11, exec, swayosd-client --output-volume +2"
-        "SUPER, f12, exec, swayosd-client --output-volume -2"
-      ];
-      bindr = [
-        "CAPS, Caps_Lock, exec, swayosd-client --caps-lock"
-        ", Scroll_Lock, exec, swayosd-client --scroll-lock"
-        ", Num_Lock, exec, swayosd-client --num-lock"
-      ];
-    };
-  };
+    hl.bind("XF86AudioMute", osd("--output-volume mute-toggle"))
+    hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("toggle-mic"))
+
+    hl.bind("SUPER + XF86MonBrightnessUp", osd("--brightness 100"), { locked = true })
+    hl.bind("SUPER + XF86MonBrightnessDown", osd("--brightness 0"), { locked = true })
+
+    hl.bind("XF86MonBrightnessUp", osd("--brightness raise"), { locked = true, repeating = true })
+    hl.bind("XF86MonBrightnessDown", osd("--brightness lower"), { locked = true, repeating = true })
+
+    hl.bind("XF86AudioRaiseVolume", osd("--output-volume +2"), { repeating = true })
+    hl.bind("XF86AudioLowerVolume", osd("--output-volume -2"), { repeating = true })
+    hl.bind("SUPER + f11", osd("--output-volume +2"), { repeating = true })
+    hl.bind("SUPER + f12", osd("--output-volume -2"), { repeating = true })
+
+    hl.bind("CAPS + Caps_Lock", osd("--caps-lock"), { release = true })
+    hl.bind("Scroll_Lock", osd("--scroll-lock"), { release = true })
+    hl.bind("Num_Lock", osd("--num-lock"), { release = true })
+  '';
 
   xdg.configFile."swayosd/config.toml".text = ''
     [server]

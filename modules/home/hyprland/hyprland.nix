@@ -36,5 +36,9 @@
 
     # enableNvidiaPatches = false;
     systemd.enable = true;
+    # При входе home-manager передаёт окружение в systemd и D-Bus. «--all» — всё окружение
+    # (GTK_THEME, QT_*, no_proxy из variables.nix), как делала строка
+    # «dbus-update-activation-environment --all --systemd …» в старом exec-once.
+    systemd.variables = [ "--all" ];
   };
 }

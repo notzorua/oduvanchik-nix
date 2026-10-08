@@ -26,11 +26,5 @@
 
   networking.firewall.trustedInterfaces = [ "virbr0" ];
 
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    stdenv.cc.cc.lib
-    zlib
-  ];
-
   nixpkgs.overlays = [ inputs.millennium.overlays.default ];
 }

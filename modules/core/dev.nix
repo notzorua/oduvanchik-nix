@@ -3,7 +3,9 @@
   hardware.opentabletdriver.enable = true;
   environment.systemPackages = [ pkgs.opentabletdriver ];
 
-  # This must be at the top level of your NixOS configuration
+  # nix-ld — для чужих (не из nixpkgs) бинарников: их загрузчик берёт библиотеки отсюда
+  # через NIX_LD_LIBRARY_PATH. На программы из nixpkgs не влияет. Включается только здесь
+  # (модуль общий для stem и fluff), в hosts/ не дублировать.
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     # Packages explicitly requested in the Nitrox script:
@@ -13,8 +15,6 @@
     libice # (formerly xorg.libICE)
     # Add other common dependencies if needed
     libsm # (formerly xorg.libSM)
-
-    claude-code
 
     libadwaita
     gtk4

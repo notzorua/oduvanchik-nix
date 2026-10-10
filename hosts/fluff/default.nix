@@ -24,7 +24,7 @@
     powerManagement.finegrained = lib.mkForce true; # RTX засыпает (D3cold), когда не нужна
     prime = {
       offload.enable = true;
-      offload.enableOffloadCmd = true;
+      offload.enableOffloadCmd = false; # свой nvidia-offload ниже: штатный не снимает переменные сеанса
       amdgpuBusId = "PCI:5@0:0:0"; # 0000:05:00.0
       nvidiaBusId = "PCI:1@0:0:0"; # 0000:01:00.0
     };
@@ -42,7 +42,28 @@
   # Цена: HDMI подключён к NVIDIA и в Hyprland не работает. Временно вернуть HDMI:
   #   "/dev/dri/amd-igpu:/dev/dri/nvidia-dgpu" (AMD первой — рендер остаётся на ней) или убрать переменную;
   #   затем nh os boot . и перезагрузка (Hyprland выбирает карты только при запуске).
-  environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/amd-igpu";
+  environment.sessionVariables = {
+    AQ_DRM_DEVICES = "/dev/dri/amd-igpu";
+
+    # EGL и Vulkan видят только Mesa/AMD — иначе каждое GL/Vulkan-приложение (Hyprland, swaync, GTK4)
+    # при запуске грузит библиотеки NVIDIA, держит /dev/nvidia0 и RTX не засыпает.
+    # Оба пути — 64 и 32 бит: в 50_mesa.json полный путь к 64-битной libEGL_mesa.
+    # Снимаются в nvidia-offload. Откат: убрать обе переменные и вернуть enableOffloadCmd = true.
+    __EGL_VENDOR_LIBRARY_FILENAMES = "/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json:/run/opengl-driver-32/share/glvnd/egl_vendor.d/50_mesa.json";
+    VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/radeon_icd.i686.json";
+  };
+
+  # Как штатный nvidia-offload из nixpkgs (те же 4 переменные), но сначала снимает ограничения сеанса выше.
+  environment.systemPackages = [
+    (pkgs.writeShellScriptBin "nvidia-offload" ''
+      unset __EGL_VENDOR_LIBRARY_FILENAMES VK_DRIVER_FILES
+      export __NV_PRIME_RENDER_OFFLOAD=1
+      export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+      export __GLX_VENDOR_LIBRARY_NAME=nvidia
+      export __VK_LAYER_NV_optimus=NVIDIA_only
+      exec "$@"
+    '')
+  ];
 
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {

@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   inputs,
   ...
 }:
@@ -14,6 +15,20 @@
 
   # Яркость: вместо nvidia_wmi_ec_backlight (не управляет экраном) — родной регулятор amdgpu (iGPU 780M)
   boot.kernelParams = [ "acpi_backlight=native" ];
+
+  # Гибридная графика: всё рисует iGPU AMD 780M (к ней подключён eDP-1),
+  # RTX 3050 — только по запросу: nvidia-offload <программа>.
+  # Только для fluff: у stem (i5-12400F) встроенной графики нет.
+  hardware.nvidia = {
+    # mkForce: в общем modules/core/hardware.nix стоит false (для stem)
+    powerManagement.finegrained = lib.mkForce true; # RTX засыпает (D3cold), когда не нужна
+    prime = {
+      offload.enable = true;
+      offload.enableOffloadCmd = true;
+      amdgpuBusId = "PCI:5@0:0:0"; # 0000:05:00.0
+      nvidiaBusId = "PCI:1@0:0:0"; # 0000:01:00.0
+    };
+  };
 
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {

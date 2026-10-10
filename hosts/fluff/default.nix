@@ -28,6 +28,14 @@
       amdgpuBusId = "PCI:5@0:0:0"; # 0000:05:00.0
       nvidiaBusId = "PCI:1@0:0:0"; # 0000:01:00.0
     };
+    # Без KMS на NVIDIA: с modeset=1 nvidia_drm поднимает NVKMS, тот создаёт дисплейный канал
+    # и блокирует сон (GC6), пока считает какой-то выход активным → runtime_usage=1, RTX не засыпает.
+    # Экраны fluff — на AMD; offload (renderD128, PRIME) должен работать и без KMS.
+    # mkForce: NixOS ставит modeset=1 и fbdev=1 при prime.offload / modesetting (общий hardware.nix).
+    moduleParams.nvidia-drm = {
+      modeset = lib.mkForce 0;
+      fbdev = lib.mkForce 0;
+    };
   };
 
   # Стабильные имена карт для AQ_DRM_DEVICES: номера cardN могут меняться между загрузками,
@@ -39,9 +47,10 @@
 
   # Hyprland (Aquamarine) открывает только AMD — иначе держит card1 и RTX не засыпает.
   # Читается до hyprland.lua, поэтому задаётся здесь (PAM-окружение сеанса lightdm), а не в конфиге Hyprland.
-  # Цена: HDMI подключён к NVIDIA и в Hyprland не работает. Временно вернуть HDMI:
-  #   "/dev/dri/amd-igpu:/dev/dri/nvidia-dgpu" (AMD первой — рендер остаётся на ней) или убрать переменную;
-  #   затем nh os boot . и перезагрузка (Hyprland выбирает карты только при запуске).
+  # Цена: HDMI и USB-C DP подключены к NVIDIA и в Hyprland не работают. Временно вернуть HDMI:
+  #   1) убрать moduleParams.nvidia-drm выше (без KMS на NVIDIA выходов нет вообще);
+  #   2) здесь "/dev/dri/amd-igpu:/dev/dri/nvidia-dgpu" (AMD первой — рендер остаётся на ней) или убрать переменную;
+  #   затем nh os boot . и перезагрузка (Hyprland выбирает карты только при запуске). RTX тогда не будет засыпать.
   environment.sessionVariables = {
     AQ_DRM_DEVICES = "/dev/dri/amd-igpu";
 

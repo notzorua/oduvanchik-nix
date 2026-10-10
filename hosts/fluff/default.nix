@@ -63,9 +63,13 @@
   };
 
   # Как штатный nvidia-offload из nixpkgs (те же 4 переменные), но сначала снимает ограничения сеанса выше.
+  # SDL — через X11: с nvidia-drm modeset=0 NVIDIA не выводит в окна Wayland (Vulkan: нет present queue,
+  # EGL: не создаётся поверхность), а через Xwayland (GLX, Vulkan xcb) offload работает.
+  # SDL_VIDEODRIVER — SDL2, SDL_VIDEO_DRIVER — SDL3 (osu!lazer).
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "nvidia-offload" ''
       unset __EGL_VENDOR_LIBRARY_FILENAMES VK_DRIVER_FILES
+      export SDL_VIDEODRIVER=x11 SDL_VIDEO_DRIVER=x11
       export __NV_PRIME_RENDER_OFFLOAD=1
       export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
       export __GLX_VENDOR_LIBRARY_NAME=nvidia

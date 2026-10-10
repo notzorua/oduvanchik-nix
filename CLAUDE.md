@@ -7,7 +7,7 @@
 
 Хосты в `flake.nix` → `nixosConfigurations`:
 - **stem** (бывший desktop) — MSI PRO B760-P WIFI, i5-12400F, 32 ГБ, RTX 4060 (`nvidia-open`), NVMe 954 ГБ. Dual-boot с Windows 11 (GRUB, `useOSProber = true`, `time.hardwareClockInLocalTime = true`).
-- **fluff** — ноутбук ASUS, AMD, btrfs (~477 ГБ, без subvolume), отдельный swap 15.5 ГБ. Установлен и загружается, донастройка продолжается (`services.asusd` для подсветки клавиатуры уже добавлен).
+- **fluff** — ноутбук ASUS TUF A15 FA506NCG: Ryzen + iGPU Radeon 780M, RTX 3050 Laptop (гибридная графика, см. раздел «fluff: гибридная графика»), btrfs (~477 ГБ, без subvolume), отдельный swap 15.5 ГБ. Установлен и загружается, донастройка продолжается (`services.asusd` для подсветки клавиатуры уже добавлен).
 
 Важные места:
 - `modules/core/` — системные модули (`steam.nix`, `nixpkgs.nix`, `services.nix`, `davinchi.nix`, `bootloader.nix`, …)
@@ -52,6 +52,31 @@
 - **Проверка конфига:** `Hyprland --verify-config -c ~/.config/hypr/hyprland.lua` — синтаксис, имена настроек, условия и эффекты правил, неизвестные диспетчеры. Не ловит: значения `hl.monitor` (опечатку в `"auto"` пропустит), имена правил в `hl.dsp.exec_cmd(cmd, { … })` и неизвестные опции `hl.bind` — они проверяются только при нажатии. Новую конфигурацию до переключения: собрать и прогнать `--verify-config` по файлам из `nix eval` (`xdg.configFile."hypr/…"`), положив их во временную папку и указав её в `XDG_CONFIG_HOME`.
 - Описание API — в пакете Hyprland: `share/hypr/stubs/hl.meta.lua` и пример `share/hypr/hyprland.lua`. Аргументы диспетчеров сверять с исходником нужной версии (`src/config/lua/bindings/LuaBindingsDispatchers.cpp`): неизвестные ключи в таблицах аргументов молча игнорируются.
 - hyprlock переход не затрагивает: у него свой `hyprlock.conf` (hyprlang).
+
+## fluff: гибридная графика (AMD 780M + RTX 3050)
+Цель: всё рисует AMD, RTX спит (D3cold) и включается только для игр через `nvidia-offload`. Всё — в `hosts/fluff/default.nix`, общие модули не тронуты (у stem iGPU нет: i5-12400F).
+
+Разводка: экран ноутбука `eDP-1` — на AMD (`0000:05:00.0`); HDMI и USB-C DP (`DP-7`) — на NVIDIA (`0000:01:00.0`).
+
+Цепочка (каждое звено держало RTX включённой — убрать любое, и она перестанет засыпать):
+1. **PRIME offload** — `hardware.nvidia.prime.offload` + `powerManagement.finegrained = lib.mkForce true` (в общем `hardware.nix` — `false`), busId `PCI:5@0:0:0` / `PCI:1@0:0:0`.
+2. **`AQ_DRM_DEVICES = "/dev/dri/amd-igpu"`** — Hyprland открывает только AMD. Путь — udev-ссылка (`/dev/dri/amd-igpu`, `/dev/dri/nvidia-dgpu`): номера `cardN` меняются между загрузками, а в `/dev/dri/by-path` есть «:» — это разделитель списка. Задаётся в `environment.sessionVariables` (PAM): Aquamarine читает её до `hyprland.lua`.
+3. **`__EGL_VENDOR_LIBRARY_FILENAMES` (только Mesa) и `VK_DRIVER_FILES` (только radeon)** на весь сеанс — иначе любое GL/Vulkan-приложение (Hyprland, swaync, GTK4) грузит библиотеки NVIDIA и держит `/dev/nvidia0`. Пути через `/run/opengl-driver{,-32}`, оба: в `50_mesa.json` полный путь к 64-битной библиотеке.
+4. **`nvidia-drm modeset=0 fbdev=0`** (`hardware.nvidia.moduleParams.nvidia-drm`, `mkForce`: NixOS ставит 1 при offload). С `modeset=1` NVKMS создаёт дисплейный канал и блокирует сон (GC6 blocker, `nvkms-evo.c`) → `runtime_usage=1` без единого открытого файла. Отключение одного `fbdev` не помогло.
+5. **Свой `nvidia-offload`** (`enableOffloadCmd = false`): штатный из nixpkgs только ставит 4 переменные `__NV_PRIME…`/`__GLX…`/`__VK_LAYER_NV_optimus`; свой сначала делает `unset __EGL_VENDOR_LIBRARY_FILENAMES VK_DRIVER_FILES` и ставит `SDL_VIDEODRIVER=x11 SDL_VIDEO_DRIVER=x11` (SDL2/SDL3).
+
+**Offload — только через X11 (Xwayland).** С `modeset=0` NVIDIA не выводит в окна Wayland: Vulkan — «Could not find both graphics and present queues» (vkcube молча берёт AMD), EGL — «failed to create surface». GLX и Vulkan через xcb работают. Проверено 10.10.2026: `glxgears`, `vkcube --wsi xcb`, osu!lazer (`nvidia-offload osu!` → SDL3 x11, GL Renderer RTX 3050) — на RTX, после выхода карта засыпает за 1–2 с.
+- Steam: в параметрах запуска игры `nvidia-offload %command%`; Proton/Wine по умолчанию идёт через X11. Нативной игре на Wayland — тоже X11 (SDL уже в скрипте; для прочих — смотреть, чем она выбирает Wayland).
+- **Sober (Roblox, Flatpak — на будущее):** Vulkan, а в `flatpak.nix` глобально `!x11` → через offload не заработает. Нужно: для `org.vinegarhq.Sober` разрешить сокет `x11` и запускать его на X11, задать в Flatpak-переопределении переменные offload (`__NV_PRIME_RENDER_OFFLOAD=1`, `__NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0`, `__VK_LAYER_NV_optimus=NVIDIA_only`, `__GLX_VENDOR_LIBRARY_NAME=nvidia`) и проверить, не попадают ли в песочницу `VK_DRIVER_FILES`/`__EGL_VENDOR_LIBRARY_FILENAMES` (там нет `/run/opengl-driver` — снять через `unset-environment`). Плюс расширение `org.freedesktop.Platform.GL.nvidia-<версия драйвера>` — после обновления драйвера `flatpak update`.
+
+Проверки:
+- сон: `cat /sys/bus/pci/devices/0000:01:00.0/power/{runtime_usage,runtime_status}` → `0` / `suspended`; **`nvidia-smi` будит карту** — не запускать перед проверкой;
+- кто держит: `sudo fuser -v /dev/nvidia* /dev/dri/renderD128`; если пусто, а `runtime_usage=1` — держит ядро (модуль);
+- игра на RTX: `nvidia-smi` во время игры или `/proc/<pid>/maps` содержит `libGLX_nvidia`.
+
+**Вернуть HDMI** (RTX тогда перестанет засыпать): убрать `moduleParams.nvidia-drm` (без KMS у NVIDIA нет выходов) и задать `AQ_DRM_DEVICES = "/dev/dri/amd-igpu:/dev/dri/nvidia-dgpu"` (AMD первой) или убрать её; `nh os boot .` + перезагрузка — Hyprland выбирает карты только при запуске. С `modeset=1` offload снова работает и на Wayland.
+
+**Откат** — по шагам, коммитами (новые сверху): «fluff: nvidia-offload — SDL через X11…» — переменные SDL; `798955f` — `modeset=0` (если откатывать его, SDL в скрипте можно оставить или убрать: с `modeset=1` offload работает и на Wayland); `19a6203` — переменные EGL/Vulkan и свой `nvidia-offload`; `092dfdb` — `AQ_DRM_DEVICES`/udev; `fd5e9aa` — prime offload. `git revert <коммит>` → `nh os boot .` → перезагрузка; в GRUB остаётся прежнее поколение.
 
 ## Сеть
 - Часть доменов заблокирована. Прокси-клиент **Throne** (sing-box), локальный прокси `127.0.0.1:2080` (mixed).

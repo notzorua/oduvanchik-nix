@@ -30,6 +30,20 @@
     };
   };
 
+  # Стабильные имена карт для AQ_DRM_DEVICES: номера cardN могут меняться между загрузками,
+  # а пути /dev/dri/by-path содержат «:», который в AQ_DRM_DEVICES — разделитель списка.
+  services.udev.extraRules = ''
+    SUBSYSTEM=="drm", KERNEL=="card[0-9]*", KERNELS=="0000:05:00.0", SYMLINK+="dri/amd-igpu"
+    SUBSYSTEM=="drm", KERNEL=="card[0-9]*", KERNELS=="0000:01:00.0", SYMLINK+="dri/nvidia-dgpu"
+  '';
+
+  # Hyprland (Aquamarine) открывает только AMD — иначе держит card1 и RTX не засыпает.
+  # Читается до hyprland.lua, поэтому задаётся здесь (PAM-окружение сеанса lightdm), а не в конфиге Hyprland.
+  # Цена: HDMI подключён к NVIDIA и в Hyprland не работает. Временно вернуть HDMI:
+  #   "/dev/dri/amd-igpu:/dev/dri/nvidia-dgpu" (AMD первой — рендер остаётся на ней) или убрать переменную;
+  #   затем nh os boot . и перезагрузка (Hyprland выбирает карты только при запуске).
+  environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/amd-igpu";
+
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
         if ((action.id == "org.freedesktop.udisks2.filesystem-mount" ||

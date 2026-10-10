@@ -12,6 +12,9 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  # Яркость: вместо nvidia_wmi_ec_backlight (не управляет экраном) — родной регулятор amdgpu (iGPU 780M)
+  boot.kernelParams = [ "acpi_backlight=native" ];
+
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
         if ((action.id == "org.freedesktop.udisks2.filesystem-mount" ||

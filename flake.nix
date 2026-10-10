@@ -42,6 +42,13 @@
       url = "github:notzorua/hyprtime";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Waybar из upstream: в nixpkgs ещё нет Lua-dispatch для Hyprland с configType = "lua".
+    # Кэша у Waybar нет (собирается локально в любом случае), follows — чтобы не тянуть его старый nixpkgs.
+    waybar = {
+      url = "github:Alexays/Waybar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {

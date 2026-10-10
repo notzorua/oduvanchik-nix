@@ -27,6 +27,7 @@
 - **После обновления ядра или nvidia — обязательна перезагрузка.** Иначе `nvidia-smi` даёт `Driver/library version mismatch`, FPS падает. Всегда напоминай об этом, если в выводе `nh` обновились `linux` или `nvidia-*`.
 - **Hash mismatch у сторонних пакетов** (апстрим подменил файл без смены версии): сначала повторить / `--keep-going`; при повторах — временно закомментировать пакет и ждать фикса в nixpkgs. `millennium-typescript-bun-deps` бывает невоспроизводимым (иногда проходит при повторе).
 - Ничего не ставить через `nix profile install` — всё постоянное переносить в конфиг (`environment.systemPackages` / `home.packages`).
+- Waybar берётся из upstream (вход `waybar` во `flake.nix`, `programs.waybar.package` в `modules/home/waybar/waybar.nix`): Waybar из nixpkgs шлёт старый синтаксис `hyprctl dispatch`, и кнопки рабочих столов с Lua-конфигом не работают. Когда Lua-dispatch появится в nixpkgs — вход можно убрать. `inputs.nixpkgs.follows` стоит намеренно: бинарного кэша у Waybar нет (собирается локально в любом случае), а без follows подтянулся бы его старый nixpkgs со второй копией GTK/glibc.
 - Waybar запускается из автозапуска Hyprland (`startup.lua`), а не systemd — после пересборки может пропасть; перезапуск: `waybar & disown` или `scripts/toggle-waybar.sh`.
 - `allowUnfree = true` уже включён.
 - `git config --global core.fsync all` — включён после повреждения репозитория при жёстких выключениях.
@@ -87,7 +88,7 @@
 
 ## Открытые задачи
 1. **fluff**: установлен и загружается (хост переименован desktop→stem, fluff добавлен, `services.asusd` для подсветки клавиатуры настроен). Осталось: раскомментировать `./spicetify.nix` (`modules/home/default.nix`), настроить Throne постоянно (`programs.throne`), докачать `discord-canary` и C#-расширение VSCodium, донастроить ноут (батарея/tlp, Wi-Fi, тачпад, разрешение в Hyprland).
-2. **fluff: переход Hyprland на Lua ещё не сделан.** Модули общие, поэтому первая пересборка fluff из `main` сразу переведёт его на Lua. До неё: открыть nwg-displays и сохранить (создаст `monitors.lua` для `eDP-1`), пересобрать через `nh os boot` + перезагрузку и проверить `monitor-watcher.sh` — он реагирует на событие `configreloaded`, а `hyprctl eval 'hl.monitor(…)'` не должен вызывать его снова (иначе зациклится).
+2. **fluff переведён на Hyprland на Lua.** Осталось проверить `monitor-watcher.sh` на зацикливание: он реагирует на событие `configreloaded`, а `hyprctl eval 'hl.monitor(…)'` не должен вызывать его снова (иначе зациклится).
 3. **DaVinci Resolve** закомментирован в `modules/core/davinchi.nix` — ждёт PR nixpkgs #562336 (фикс хеша).
 4. ~~`gemini-cli` / `gemini-cli-bin` убраны из конфига~~ (сделано).
 5. Перегенерировать приватный ключ WARP (засвечен ранее).

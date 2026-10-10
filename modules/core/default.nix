@@ -21,6 +21,7 @@
     ./user.nix
     ./wayland.nix
     ./virtualization.nix
+    ./virtualbox.nix
     ./qmk.nix
 #    ./ollama.nix
     ./amneziawg.nix

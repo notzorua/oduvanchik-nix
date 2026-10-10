@@ -8,7 +8,6 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/core
-    ../../modules/core/virtualbox.nix
   ];
 
   powerManagement.cpuFreqGovernor = "performance";

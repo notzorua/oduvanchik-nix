@@ -19,7 +19,7 @@
 ## Команды
 - **Все команды nix/nh/git — только из `~/nixos-configuration`**, не из `~`.
 - `nixup` (алиас в `zsh_alias.nix`) — `git add -A` → `nh os switch .` → `sudo bootcheck`, без обновления версий. **Коммит не создаёт** (и никогда не создавал): `git add -A` только индексирует, чтобы flake видел новые файлы; коммитить вручную.
-- `nixupd()` (в `zsh.nix`) — `nix flake update` → проверка `flake.lock` через **flakeguard** (при подозрении на repojacking откатывает lock) → `git add -A` → `nh os switch`. **Коммит не создаёт; `bootcheck` не запускает** — перед перезагрузкой `sudo bootcheck` вручную.
+- `nixupd()` (в `zsh.nix`) — `nix flake update` → проверка `flake.lock` через **flakeguard** (при подозрении на repojacking откатывает lock) → `git add -A` → `nh os switch` → `sudo bootcheck` (только после успешного switch). **Коммит не создаёт** — коммитить вручную.
 - `nh os switch . --keep-going` — продолжать сборку, несмотря на отдельные упавшие пакеты.
 - `sudo bootcheck` — проверка, что система загрузится (GRUB, ядра, UEFI, ESP). Запускать перед перезагрузкой.
 

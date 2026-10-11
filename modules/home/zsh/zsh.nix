@@ -195,7 +195,7 @@
 
         rm -f "$dir/flake.lock.bak"
         git -C "$dir" add -A
-        nh os switch "$dir"
+        nh os switch "$dir" && sudo bootcheck
       }
     '';
   };

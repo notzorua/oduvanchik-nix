@@ -27,7 +27,7 @@ local services = {
 	"udiskie --automount --notify --smart-tray",
 	"xrdb -merge ~/.Xresources",
 	"hyprctl setcursor Qogir-Light 48", -- setcursor — не dispatch, в Lua-режиме работает
-	"init-wallpaper",
+	"init-wallpaper --random", -- случайные обои из wallpapers/ репозитория
 	"xembedsniproxy",
 	"ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false",
 }

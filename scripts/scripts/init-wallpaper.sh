@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+# init-wallpaper           — поставить текущие обои (~/Pictures/wallpapers/wallpaper)
+# init-wallpaper --random  — сначала выбрать случайную картинку из wallpapers/ репозитория
+
+wallpaper_path="$HOME/Pictures/wallpapers"
+repo_folder="$wallpaper_path/repo" # home.file в modules/home/waypaper.nix
+
+transition=(-t none)
+if [[ "$1" == "--random" ]]; then
+    # -L: repo — ссылка в /nix/store; путь остаётся через ~/…/repo, чтобы ссылку не сломала сборка мусора
+    new_wallpaper=$(find -L "$repo_folder" -type f \
+        \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) | shuf -n 1)
+    if [[ -n "$new_wallpaper" ]]; then
+        ln -sfn "$new_wallpaper" "$wallpaper_path/wallpaper"
+        transition=(--transition-type fade --transition-duration 1)
+    fi
+fi
+
 # Start awww daemon if not running
 if ! pgrep -x awww-daemon > /dev/null; then
     awww-daemon --no-cache &
@@ -11,4 +28,4 @@ if ! pgrep -x awww-daemon > /dev/null; then
 fi
 
 # Set wallpaper
-awww img -t none ~/Pictures/wallpapers/wallpaper &
+awww img "${transition[@]}" "$wallpaper_path/wallpaper" &

@@ -2,6 +2,9 @@
 {
   home.packages = with pkgs; [ waypaper ];
 
+  # Обои из репозитория: init-wallpaper --random (старт Hyprland) выбирает отсюда случайную.
+  home.file."Pictures/wallpapers/repo".source = ../../wallpapers;
+
   xdg.configFile."waypaper/config.ini".text = ''
     [Settings]
     language = en

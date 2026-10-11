@@ -49,6 +49,10 @@
       url = "github:Alexays/Waybar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # AyuGram от ndfined-crp (есть фальшивые копии — проверять владельца). Кэш: см. system.nix.
+    # Без follows намеренно: кэш собран под его nixpkgs, с нашим — хеш другой и локальная компиляция.
+    ayugram-desktop.url = "github:ndfined-crp/ayugram-desktop";
   };
   outputs =
     {

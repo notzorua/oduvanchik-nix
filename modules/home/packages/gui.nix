@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   home.packages = with pkgs; [
     ## Multimedia
@@ -26,7 +26,7 @@
     qbittorrent
     virt-manager
     discord-canary
-    ayugram-desktop
+    inputs.ayugram-desktop.packages.${pkgs.stdenv.hostPlatform.system}.default
     osu-lazer-bin
     bottles
     github-desktop

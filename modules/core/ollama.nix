@@ -5,11 +5,10 @@
   services.ollama = {
     enable = true;
 
-    # Собираем только под RTX 4060 (вычислительная способность 8.9).
-    # Без этого сборка идёт под все карты сразу и занимает часы.
-    package = pkgs.ollama-cuda.override {
-      cudaArches = [ "89" ];
-    };
+    # Обычный ollama-cuda: готовый лежит в cache.nixos-cuda.org (архитектуры 7.5…12.1, в т.ч.
+    # 8.9 — RTX 4060). Своё cudaArches меняет derivation → кэш мимо, локальная сборка после
+    # каждого обновления nixpkgs. Цена — ~300 МиБ на диске за лишние архитектуры.
+    package = pkgs.ollama-cuda;
 
     # Модель скачается при первой пересборке, около 5 ГБ.
     loadModels = [ "qwen3:8b" ];

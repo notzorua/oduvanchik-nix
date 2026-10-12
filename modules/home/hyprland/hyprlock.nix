@@ -12,11 +12,7 @@
 
       background = [
         {
-          # 2560×1440. Кириллица в имени: путь через строку, имя в store — ASCII (иначе ошибка).
-          path = "${builtins.path {
-            path = ../../../wallpapers + "/пукфукпфцфпкупцфукацуап.png";
-            name = "hyprlock-wallpaper.png";
-          }}";
+          path = "${../../../wallpapers/lock.png}"; # 2560×1440
           color = "rgba(29, 32, 33, 255)";
           blur_passes = 0;
           vibrancy_darkness = 0.0;

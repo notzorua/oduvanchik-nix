@@ -177,9 +177,11 @@ done
 
 ## Copy wallpapers
 echo -e "${INFO}Copying wallpapers..."
-if cp -r wallpapers/otherWallpaper/gruvbox/* ~/Pictures/wallpapers/others/ &&
-    cp -r wallpapers/otherWallpaper/nixos/* ~/Pictures/wallpapers/others/ &&
-    ln -sf $PWD/wallpapers/wallpaper.png ~/Pictures/wallpapers/wallpaper; then
+# Картинки из wallpapers/ (без подпапок); текущие обои — bg.jpeg (при старте Hyprland
+# init-wallpaper --random всё равно выберет случайную).
+if find wallpapers -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
+    -exec cp -t ~/Pictures/wallpapers/others/ {} + &&
+    ln -sf ~/Pictures/wallpapers/others/bg.jpeg ~/Pictures/wallpapers/wallpaper; then
     echo -e "${OK}Wallpapers copied successfully."
 else
     echo -e "${WARN}Some wallpapers could not be copied!"

@@ -27,6 +27,9 @@
     };
 
     udisks2.enable = true;
+
+    # обновление прошивок (UEFI/BIOS, SSD, периферия) через LVFS: fwupdmgr refresh / get-updates
+    fwupd.enable = true;
   };
 
   time.timeZone = "Europe/Moscow";

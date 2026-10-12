@@ -10,6 +10,14 @@
     # каждого обновления nixpkgs. Цена — ~300 МиБ на диске за лишние архитектуры.
     package = pkgs.ollama-cuda;
 
+    # Чтобы qwen3:8b с num_ctx 7168 (сайт prava) целиком помещалась в 8 ГБ RTX 4060 даже
+    # с открытым браузером: KV-кэш в 8 битах вместо 16 (q8_0 работает только с flash attention).
+    # Отдельных опций в модуле нет — только environmentVariables.
+    environmentVariables = {
+      OLLAMA_FLASH_ATTENTION = "1";
+      OLLAMA_KV_CACHE_TYPE = "q8_0";
+    };
+
     # Модель скачается при первой пересборке, около 5 ГБ.
     loadModels = [ "qwen3:8b" ];
   };

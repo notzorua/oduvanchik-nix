@@ -9,7 +9,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-gaming.url = "github:fufexan/nix-gaming";
+    # flake-compat не нужен конфигу напрямую: общий узел для waybar и nix-gaming (follows ниже).
+    # Waybar указывал на edolstra/flake-compat — репозиторий переименован, старое имя свободно (repojacking).
+    flake-compat = {
+      url = "github:NixOS/flake-compat";
+      flake = false;
+    };
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.flake-compat.follows = "flake-compat";
+    };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -48,6 +57,7 @@
     waybar = {
       url = "github:Alexays/Waybar";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
     };
 
     # AyuGram от ndfined-crp (есть фальшивые копии — проверять владельца). Кэш: см. system.nix.

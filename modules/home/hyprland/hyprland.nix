@@ -1,7 +1,26 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  # Скриншот как в ShareX (клавиша Print, binds.lua): grim снимает весь экран, satty открывает
+  # снимок на весь экран с инструментом обрезки. Enter/кнопка копирования — wl-copy в буфер;
+  # сохранение — в ~/Pictures/Screenshots. --early-exit — закрыть satty сразу после
+  # копирования/сохранения. Флаги сверены с satty 0.22.0 --help.
+  # --early-exit стоит последним: он принимает необязательные значения (all/copy/save…)
+  # и «съел» бы следующий аргумент. Пути к программам — из Nix, скрипт не зависит от PATH.
+  screenshot = pkgs.writeShellScriptBin "screenshot" ''
+    dir="$HOME/Pictures/Screenshots"
+    mkdir -p "$dir"
+    ${lib.getExe pkgs.grim} - | ${lib.getExe pkgs.satty} \
+      --filename - \
+      --fullscreen \
+      --initial-tool crop \
+      --copy-command ${pkgs.wl-clipboard}/bin/wl-copy \
+      --output-filename "$dir/screenshot-%Y%m%d-%H%M%S.png" \
+      --early-exit
+  '';
+in
 {
   home.packages = with pkgs; [
-    #screenshot
+    screenshot
     satty
     awww
     grimblast

@@ -65,13 +65,10 @@ bind("CTRL + SHIFT + Escape", "Mission Center на столе 9", exec("missionc
 bind(mod .. " + equal", "лупа (woomer)", exec("woomer"))
 bind(mod .. " + ALT + S", "включить/выключить экранный чтец Orca", exec("pkill -x orca || orca"))
 
--- Снимки экрана и распознавание текста. [[…]] — строка Lua без экранирования кавычек.
-bind("F11", "снимок экрана в буфер", exec("grim - | wl-copy"))
-bind(
-	"CTRL + F11",
-	"снимок области с правкой (satty)",
-	exec([[grim -g "$(slurp)" - | satty --filename - --fullscreen --early-exit --copy-command "wl-copy" && wl-paste | wl-copy]])
-)
+-- Снимки экрана и распознавание текста.
+-- screenshot — скрипт grim → satty (обрезка, правка, буфер/файл), в hyprland.nix.
+bind("Print", "Скриншот области (satty)", exec("screenshot"))
+bind("SHIFT + Print", "снимок всего экрана в буфер", exec("grim - | wl-copy"))
 bind(mod .. " + CTRL + O", "распознать текст с экрана (OCR)", exec("ocr"))
 
 -- Буфер обмена (cliphist)

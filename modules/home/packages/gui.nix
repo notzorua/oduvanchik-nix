@@ -13,6 +13,7 @@
     vlc
 
     ## Office
+    anki-bin # официальная сборка, та же версия, что была во Flatpak (anki из исходников отстаёт)
     libreoffice
     gnome-calculator
 

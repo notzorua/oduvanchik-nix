@@ -77,6 +77,29 @@
     '')
   ];
 
+  # Sober (Roblox) — всегда на RTX, как nvidia-offload выше, но через переопределение Flatpak:
+  # X11 вместо Wayland (с modeset=0 offload в окна Wayland не работает), переменные offload,
+  # и снять переменные сеанса: в песочнице нет /run/opengl-driver, с ними не найдётся ни один драйвер.
+  # Нужно расширение org.freedesktop.Platform.GL.nvidia-<версия драйвера> — Flatpak ставит его сам при обновлении.
+  services.flatpak.overrides.settings."org.vinegarhq.Sober" = {
+    Context = {
+      sockets = [
+        "x11"
+        "!wayland"
+      ];
+      unset-environment = [
+        "__EGL_VENDOR_LIBRARY_FILENAMES"
+        "VK_DRIVER_FILES"
+      ];
+    };
+    Environment = {
+      __NV_PRIME_RENDER_OFFLOAD = "1";
+      __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      __VK_LAYER_NV_optimus = "NVIDIA_only";
+    };
+  };
+
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
         if ((action.id == "org.freedesktop.udisks2.filesystem-mount" ||

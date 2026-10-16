@@ -115,7 +115,6 @@
 
   networking.firewall.trustedInterfaces = [ "virbr0" ];
 
-  nixpkgs.overlays = [ inputs.millennium.overlays.default ];
   services.asusd = {
     enable = true;
 };

@@ -16,6 +16,17 @@
 - `pkgs/` — собственные пакеты (например `pkgs/maple-mono/`)
 - Собственные проекты подключены как flake inputs (`bootcheck`, `flakeguard`, `hyprtime`), модуль `own-tools.nix`
 
+## Куда ставить программы
+Home-конфиг (`modules/home/`) общий для обоих хостов; системный (`modules/core/`) — тоже, кроме того, что в `hosts/<host>/`.
+- **Программа без своей настройки** → `modules/home/packages/`: `cli.nix` (терминал), `gui.nix` (графические), `dev.nix` / `dev_dotnet.nix` (языки, LSP, отладчики), `nix.nix` (инструменты Nix).
+- **Программа с настройкой** → свой файл `modules/home/<имя>.nix` (`programs.<имя>` или пакет + конфиг рядом); в `packages/*.nix` её не повторять.
+- **Системное** → `modules/core/`: то, что нужно root/службам или идёт вместе с модулем (`virtualization.nix`, `qmk.nix`, `amneziawg.nix`). Базовые утилиты для root (`git`, `wget`) — в `system.nix`, в home их не повторять (исключение — `programs.git` в home ради настроек).
+- **Только один хост** → `hosts/<host>/default.nix` или модуль, импортируемый оттуда (`ollama.nix` у stem).
+- Если включён `programs.X` / `hardware.X` / `services.X`, пакет X в список не добавлять: модуль ставит его сам.
+- **Flatpak** → `modules/core/flatpak.nix`, только то, чего нет в nixpkgs или там не работает.
+- **Overlays** → только `modules/core/nixpkgs.nix` (не в хостах: иначе overlay применится дважды).
+- Перед добавлением: `grep -rn '<имя>' modules hosts`.
+
 ## Команды
 - **Все команды nix/nh/git — только из `~/nixos-configuration`**, не из `~`.
 - `nixup` (алиас в `zsh_alias.nix`) — `git add -A` → `nh os switch .` → `sudo bootcheck`, без обновления версий. **Коммит не создаёт** (и никогда не создавал): `git add -A` только индексирует, чтобы flake видел новые файлы; коммитить вручную.

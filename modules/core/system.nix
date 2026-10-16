@@ -29,7 +29,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    kdePackages.plasma-workspace
     libappindicator-gtk3
     wget
     git

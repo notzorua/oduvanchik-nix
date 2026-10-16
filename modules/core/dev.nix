@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
-  hardware.opentabletdriver.enable = true;
-  environment.systemPackages = [ pkgs.opentabletdriver ];
+  hardware.opentabletdriver.enable = true; # ставит и сам пакет opentabletdriver
 
   # nix-ld — для чужих (не из nixpkgs) бинарников: их загрузчик берёт библиотеки отсюда
   # через NIX_LD_LIBRARY_PATH. На программы из nixpkgs не влияет. Включается только здесь

@@ -25,12 +25,9 @@
     zenity
     chromium
     qbittorrent
-    virt-manager
     discord-canary
     inputs.ayugram-desktop.packages.${pkgs.stdenv.hostPlatform.system}.default
     osu-lazer-bin
-    bottles
-    github-desktop
     bottles
     github-desktop
     tor-browser

@@ -8,7 +8,7 @@
     virt-manager
     virt-viewer
     spice
-    spice-gtk
+    # spice-gtk ставит virtualisation.spiceUSBRedirection ниже
     spice-protocol
     virtio-win
     win-spice

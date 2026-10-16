@@ -57,7 +57,6 @@
     pyright
 
     universal-ctags
-    ripgrep
 
     lua-language-server # for lua_ls
     ruff
@@ -69,7 +68,7 @@
 
     omnisharp-roslyn # Language Server (LSP)
     netcoredbg # Debugger (DAP)
-    ripgrep # Required by many AstroNvim features
+    # ripgrep (нужен AstroNvim) — в cli.nix
     #csharp-ls
 
     #dotnet-sdk_10
@@ -79,18 +78,10 @@
     #  sdk_10_0
     #])
 
-    netcoredbg
     mono
     roslyn-ls
-    omnisharp-roslyn
-    fontconfig
-    freetype
-    skia
     #xdotool
-    libx11 # Essential for Avalonia
-    icu # Essential for .NET Globalization
-    zlib # Common compression
-    libGL # Hardware acceleration
-    openssl # Networking/Auth
+    # Библиотеки для .NET (fontconfig, icu, libGL…) — в programs.nix-ld.libraries (modules/core/dev.nix):
+    # в home.packages программам они не видны.
   ];
 }

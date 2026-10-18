@@ -12,7 +12,7 @@
 
       background = [
         {
-          path = "${../../../wallpapers/lock.png}"; # 2560×1440
+          path = "${../../../wallpapers/lock/lock.png}"; # 2560×1440; не в корне wallpapers/ — не попадает в случайные обои
           color = "rgba(29, 32, 33, 255)";
           blur_passes = 0;
           vibrancy_darkness = 0.0;

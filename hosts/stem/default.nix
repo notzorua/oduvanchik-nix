@@ -13,6 +13,10 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  # Dual boot с Windows 11: Windows держит аппаратные часы в местном времени.
+  # Без этого после загрузки Windows время в NixOS сдвигается на часовой пояс (и наоборот).
+  time.hardwareClockInLocalTime = true;
+
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
         if ((action.id == "org.freedesktop.udisks2.filesystem-mount" ||

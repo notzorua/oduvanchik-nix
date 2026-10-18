@@ -25,7 +25,7 @@ instead of everything piling into one enormous module. Adding a machine means
 adding a host, not rewriting anything.
 
 Installing takes three steps: clone it into the home directory, enter the
-folder, and rebuild with the desktop flake target.
+folder, and rebuild with the flake target of the host (stem or fluff).
 
 It started as a fork of adarkaz/nixos-configuration, which in turn grew out of
 Frost-Phoenix/nixos-config. Good ideas travel, and I have kept the ones that

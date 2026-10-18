@@ -17,6 +17,14 @@
   # Без этого после загрузки Windows время в NixOS сдвигается на часовой пояс (и наоборот).
   time.hardwareClockInLocalTime = true;
 
+  # Подкачка — файлом (раздела подкачки на stem нет). У fluff свой раздел (hardware-configuration.nix).
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024; # 16 GiB
+    }
+  ];
+
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
         if ((action.id == "org.freedesktop.udisks2.filesystem-mount" ||

@@ -43,11 +43,4 @@
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "26.05";
-
-  swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 16 * 1024; # 16 GiB
-    }
-  ];
 }

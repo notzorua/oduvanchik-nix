@@ -43,6 +43,10 @@ rule(class("Aseprite"), { tile = true })
 rule(class("zenity"), { size = "850 500" })
 rule(class("SoundWireServer"), { size = "725 330" })
 
+-- satty (скрипт screenshot): без --fullscreen открывался плиткой. Размер — от монитора:
+-- у маленькой области окно было бы по размеру снимка и не вмещало панели инструментов.
+rule(class("com.gabm.satty"), { float = true, center = true, size = "monitor_w*0.7 monitor_h*0.75" })
+
 -- Было две строки с одним условием — теперь одно правило с двумя эффектами.
 rule({ title = "^(Volume Control)$" }, { size = "700 450", move = "40 55%" })
 rule({ title = "^(Picture-in-Picture)$" }, { pin = true, float = true })

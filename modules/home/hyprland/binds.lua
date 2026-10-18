@@ -67,7 +67,7 @@ bind(mod .. " + ALT + S", "включить/выключить экранный 
 
 -- Снимки экрана и распознавание текста.
 -- screenshot — скрипт grim → satty (обрезка, правка, буфер/файл), в hyprland.nix.
-bind("Print", "Скриншот области (satty)", exec("screenshot"))
+bind("CTRL + Print", "Скриншот области (satty)", exec("screenshot"))
 bind("SHIFT + Print", "снимок всего экрана в буфер", exec("grim - | wl-copy"))
 bind(mod .. " + CTRL + O", "распознать текст с экрана (OCR)", exec("ocr"))
 

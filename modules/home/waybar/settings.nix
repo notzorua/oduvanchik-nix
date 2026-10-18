@@ -42,7 +42,18 @@ in
       "cpu"
       "memory"
       # "disk"
-      "pulseaudio"
+    ]
+    # stem — колонки и наушники отдельно (volume.nix), fluff — выход по умолчанию.
+    ++ (
+      if host == "stem" then
+        [
+          "custom/volume-speakers"
+          "custom/volume-headphones"
+        ]
+      else
+        [ "pulseaudio" ]
+    )
+    ++ [
       "network"
       "battery"
       "hyprland/language"
@@ -63,11 +74,11 @@ in
         "on-scroll-down" = "shift_down"; # Scroll to previous month
         "on-click-middle" = "shift_reset"; # RE-SET to current date
       };
-      format = "  {:%H:%M}";
+      format = "{:%H:%M}";
       tooltip = "true";
       # tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
       tooltip-format = "<tt><small>{calendar}</small></tt>";
-      format-alt = "  {:%d/%m}";
+      format-alt = "{:%d/%m}";
     };
     #workspaces
     "hyprland/workspaces" = {

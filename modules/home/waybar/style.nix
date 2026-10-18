@@ -1,7 +1,9 @@
 { ... }:
 let
   custom = {
-    font = "Maple Mono";
+    # Maple Mono — без Nerd-значков. Без явного запасного шрифта fontconfig брал часть кодов
+    # (U+F017, U+F028, U+F011) из Courier New/Arial — там на этих местах свои символы (точки).
+    font = ''"Maple Mono", "Symbols Nerd Font"'';
     font_size = "16px";
     font_weight = "bold";
     text_color = "#A89984";
@@ -64,6 +66,8 @@ in
     #cpu { color: #665C54; padding: 0 8px; }
     #memory { color: #665C54; padding: 0 8px; }
     #pulseaudio { color: #665C54; padding: 0 8px; }
+    #custom-volume-speakers,
+    #custom-volume-headphones { color: #665C54; padding: 0 8px; }
     #network { color: #665C54; padding: 0 8px; }
     #language { color: #665C54; padding: 0 8px; }
     #custom-notification { color: #665C54; padding: 0 8px; }

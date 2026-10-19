@@ -8,10 +8,6 @@
 -- Запасное правило: любой монитор, не описанный ниже, — в его лучшем режиме, автоматически.
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
 
--- Правила конкретного хоста (monitors.nix подставляет их вместо строки ниже). Стоят до файлов
--- nwg-displays: если там описан тот же выход, nwg-displays главнее.
--- @HOST_MONITORS@
-
 -- Настройки из nwg-displays. В Lua нет «source» для .conf, но nwg-displays (с 0.4.4) рядом
 -- с monitors.conf / workspaces.conf пишет monitors.lua / workspaces.lua — их и подключаем.
 -- Было «# hyprlang noerror true»: нет файла — не ошибка. Здесь так же: файла нет — пропускаем,

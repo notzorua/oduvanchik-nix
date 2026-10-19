@@ -9,5 +9,6 @@
     ./windowrules.nix
     ./hyprlock.nix
     ./variables.nix
+    ./env.nix
   ];
 }

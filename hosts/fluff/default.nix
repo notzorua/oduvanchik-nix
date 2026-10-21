@@ -118,4 +118,9 @@
   services.asusd = {
     enable = true;
 };
+
+  # Временно: обычный Steam без Millennium. На fluff millennium-typescript-bun-deps
+  # даёт hash mismatch (недетерминированный FOD, github.com/SteamClientHomebrew/Millennium/issues/934).
+  # Убрать, когда #934 исправят, или перенести готовый путь со stem (nix copy через флешку).
+  programs.steam.package = lib.mkForce pkgs.steam;
 }

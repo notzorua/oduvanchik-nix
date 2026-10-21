@@ -29,8 +29,14 @@ let
     picker=$!
     shot=$(mktemp -p "''${XDG_RUNTIME_DIR:-/tmp}" screenshot.XXXXXX.ppm)
     trap 'kill "$picker" 2>/dev/null; rm -f "$shot"' EXIT
-    for _ in $(seq 50); do
-      hyprctl layers | grep -q "namespace: hyprpicker, pid: $picker" && break
+    # Ждём, пока слой hyprpicker покажется (alpha > 0): в списке слоёв он есть сразу,
+    # но с alpha 0, пока не готов замороженный кадр. Если запустить slurp раньше,
+    # первое нажатие мыши теряется. Ограничение — 1 с.
+    deadline=$(( ''${EPOCHREALTIME/./} + 1000000 ))
+    while kill -0 "$picker" 2>/dev/null && (( ''${EPOCHREALTIME/./} < deadline )); do
+      hyprctl layers -j | ${lib.getExe pkgs.jq} -e --argjson pid "$picker" \
+        'any(.[].levels[][]; .pid == $pid and .alpha > 0)' >/dev/null && break
+      sleep 0.01
     done
 
     region=$(${lib.getExe pkgs.slurp}) || exit 0

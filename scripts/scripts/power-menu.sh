@@ -9,7 +9,6 @@ gray='#a89984'
 shutdown="<span color='${red}'>󰐥</span>"
 reboot="<span color='${green}'>󰜉</span>"
 suspend="<span color='${yellow}'>󰤄</span>"
-quit="<span color='${gray}'>✘</span>"
 
 yes="<span color='${green}'>✔</span>"
 no="<span color='${red}'>✘</span>"
@@ -21,7 +20,7 @@ rofi_cmd() {
 }
 
 run_rofi() {
-  echo -e "$shutdown\n$reboot\n$suspend\n$quit" | rofi_cmd
+  echo -e "$shutdown\n$reboot\n$suspend" | rofi_cmd
 }
 
 confirm_cmd() {

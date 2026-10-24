@@ -101,6 +101,55 @@ Home-конфиг (`modules/home/`) общий для обоих хостов; �
 
 **Откат** — по шагам, коммитами (новые сверху): «fluff: nvidia-offload — SDL через X11…» — переменные SDL; `798955f` — `modeset=0` (если откатывать его, SDL в скрипте можно оставить или убрать: с `modeset=1` offload работает и на Wayland); `19a6203` — переменные EGL/Vulkan и свой `nvidia-offload`; `092dfdb` — `AQ_DRM_DEVICES`/udev; `fd5e9aa` — prime offload. `git revert <коммит>` → `nh os boot .` → перезагрузка; в GRUB остаётся прежнее поколение.
 
+## Баг Aquamarine #383 (stem)
+При выходе из Hyprland на stem Aquamarine падает (SIGSEGV в `flushAsyncCommitEvents()`), KMS остаётся в плохом состоянии, и LightDM-greeter (X11, NVIDIA) зависает — экран замирает. Исправлено upstream коммитом `fc77bd5`, в релизе ещё нет (у нас Aquamarine 0.15.1, ждём 0.15.2).
+- **Не выходить из Hyprland в greeter.** Если случилось: `Ctrl+Alt+F3` → `sudo systemctl restart display-manager`; нет консоли — кнопка питания.
+- **Проверить ~07.11.2026:** после `nixupd` и перезагрузки — `nix-store -qR /run/current-system | grep aquamarine`. Если ≥ 0.15.2 — осторожно проверить выход; если нет — включить запасной вариант.
+
+### Запасной вариант: greetd + tuigreet
+greetd — легковесный менеджер входа (display manager), tuigreet — его текстовый greeter (экран входа) в консоли: X11 и NVIDIA в нём не участвуют, зависать после падения Aquamarine нечему. Диагностика 24.10.2026: пробная сборка через `extendModules` (конфиг stem + блок ниже, без изменения репозитория) прошла.
+
+Только stem — блок в `hosts/stem/default.nix` (в аргументы модуля добавить `config` и `lib`):
+```nix
+services.greetd =
+  let
+    startHyprland = lib.getExe' config.programs.hyprland.package "start-hyprland";
+  in
+  {
+    enable = true;
+    useTextGreeter = true;
+    settings = {
+      # автологин при загрузке — как раньше у LightDM
+      initial_session = {
+        user = "zoroa";
+        command = startHyprland;
+      };
+      # после выхода из сеанса — tuigreet
+      default_session.command = lib.concatStringsSep " " [
+        (lib.getExe pkgs.tuigreet)
+        "--time"
+        "--remember"
+        "--remember-session"
+        "--asterisks"
+        "--sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions"
+        "--cmd ${startHyprland}"
+      ];
+    };
+  };
+```
+- **Пакеты:** `pkgs.tuigreet` 0.11.1 (старого `greetd.tuigreet` больше нет), greetd 0.10.3. Пользователя `greeter` (от него идёт `default_session`) и `/var/cache/tuigreet` (для `--remember`) модуль создаёт сам.
+- **Команда — `start-hyprland`** из `config.programs.hyprland.package`, как в `hyprland.desktop`.
+- **LightDM выключится сам:** он включается от `services.xserver.enable`, только если не выбран другой DM.
+- **Обёртка с `cap_sys_nice` сохранится:** `start-hyprland` делает `execvp("Hyprland")` по `PATH`, а `/run/wrappers/bin` первым в `PATH` ставит pam_env (а не LightDM) — значит, и под greetd запустится `/run/wrappers/bin/Hyprland`. Проверено на процессе: `CapEff` = `cap_sys_nice`, политика `SCHED_RR`, приоритет 1.
+- `services.displayManager.autoLogin` в `modules/core/xserver.nix` на stem станет неиспользуемым — **не убирать**, он нужен fluff.
+- **Применять только `nh os boot .` → `sudo bootcheck` → перезагрузка.** Не `switch`: у greetd `restartIfChanged = false`, а при switch он конфликтует с ещё работающим LightDM.
+- **Откат:**
+  - не загрузилось → в GRUB выбрать прошлое поколение;
+  - загрузилось, но tty1 пустой → `Ctrl+Alt+F2` (там есть getty — обычный вход в консоль), затем `sudo /nix/var/nix/profiles/system-<N-1>-link/bin/switch-to-configuration boot` и перезагрузка;
+  - насовсем — убрать блок `services.greetd`.
+- **Сообщения ядра поверх tuigreet** (по желанию): при `loglevel=4` в консоль попадают только ошибки (уровни 0–3). Чтобы убрать и их — `boot.kernel.sysctl."kernel.printk" = "3 4 1 3";`. Цена: ошибки вроде NVIDIA Xid будут видны только в `journalctl -k`.
+- **При переходе** поправить упоминания «PAM (lightdm)» в `modules/home/hyprland/env.nix` и в пункте про TZDIR (раздел «Правила и выученные уроки»).
+
 ## Сеть
 - Часть доменов заблокирована. Прокси-клиент **Throne** (sing-box), локальный прокси `127.0.0.1:2080` (mixed).
 - Через прокси `cache.nixos.org` бывает очень медленным — такие домены в `no_proxy`.

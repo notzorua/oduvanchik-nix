@@ -52,7 +52,7 @@ bind(
 )
 -- Было через hyprctl dispatch exec '[workspace 5 silent] …' — теперь правило прямо здесь.
 bind(mod .. " + SHIFT + S", "SoundWireServer на столе 5", exec("SoundWireServer", { workspace = "5 silent" }))
-bind("ALT + Escape", "заблокировать экран", exec("hyprlock"))
+bind("ALT + Escape", "заблокировать экран", exec("lock"))
 bind(mod .. " + SHIFT + Escape", "меню выключения", exec("power-menu"))
 bind(mod .. " + E", "файлы (Nemo)", exec("nemo"))
 bind("ALT + E", "файлы (Nemo) в плавающем окне", exec("nemo", { float = true, size = "1111 700" }))

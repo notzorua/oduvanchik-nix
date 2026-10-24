@@ -1,5 +1,50 @@
-{ host, ... }:
+{ pkgs, lib, ... }:
+let
+  # Запасной фон — вшитая копия (в /nix/store), если в рабочей папке картинок нет.
+  fallback = ../../../wallpapers/lock/lock.png;
+
+  # lock — случайный фон из wallpapers/lock рабочей копии репозитория (без git и пересборки)
+  # → ссылка ~/.cache/lock-bg (её читает hyprlock) → hyprlock.
+  lock = pkgs.writeShellApplication {
+    name = "lock";
+    runtimeInputs = with pkgs; [
+      hyprlock
+      coreutils
+      findutils
+      procps
+    ];
+    text = ''
+      # уже заблокировано (например, suspend из power-menu на заблокированном экране)
+      if pidof hyprlock > /dev/null; then
+        exit 0
+      fi
+
+      dir="$HOME/nixos-configuration/wallpapers/lock"
+      bg=""
+      if [[ -d "$dir" ]]; then
+        bg=$(find -L "$dir" -maxdepth 1 -type f \
+          \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | shuf -n 1)
+      fi
+
+      mkdir -p "$HOME/.cache"
+      ln -sfn "''${bg:-${fallback}}" "$HOME/.cache/lock-bg"
+
+      exec hyprlock
+    '';
+  };
+in
 {
+  home.packages = [ lock ];
+
+  # Только блокировка перед сном и по loginctl lock-session — без таймеров простоя.
+  services.hypridle = {
+    enable = true;
+    settings.general = {
+      lock_cmd = lib.getExe lock;
+      before_sleep_cmd = lib.getExe lock;
+    };
+  };
+
   programs.hyprlock = {
     enable = true;
 
@@ -12,7 +57,7 @@
 
       background = [
         {
-          path = "${../../../wallpapers/lock/lock.png}"; # 2560×1440; не в корне wallpapers/ — не попадает в случайные обои
+          path = "~/.cache/lock-bg"; # ставит скрипт lock (выше); ~ hyprlock раскрывает сам
           color = "rgba(29, 32, 33, 255)";
           blur_passes = 0;
           vibrancy_darkness = 0.0;

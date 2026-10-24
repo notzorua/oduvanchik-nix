@@ -9,7 +9,7 @@ repo_folder="$wallpaper_path/repo" # home.file в modules/home/waypaper.nix
 transition=(-t none)
 if [[ "$1" == "--random" ]]; then
     # -L: repo — ссылка в /nix/store; путь остаётся через ~/…/repo, чтобы ссылку не сломала сборка мусора.
-    # -maxdepth 1: только корень wallpapers/, подпапки не трогаем (lock/ — фон hyprlock).
+    # -maxdepth 1: только корень wallpapers/, подпапки не трогаем (lock/ — фоны экрана блокировки, их берёт скрипт lock).
     new_wallpaper=$(find -L "$repo_folder" -maxdepth 1 -type f \
         \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) | shuf -n 1)
     if [[ -n "$new_wallpaper" ]]; then

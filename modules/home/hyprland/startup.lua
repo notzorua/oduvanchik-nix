@@ -16,7 +16,7 @@
 
 -- Фоновые программы — в том же порядке, что были.
 local services = {
-	"hyprlock", -- экран блокировки сразу после входа
+	"lock", -- экран блокировки сразу после входа (скрипт lock — hyprlock.nix)
 	"nm-applet",
 	"poweralertd",
 	"wl-clip-persist --clipboard regular",

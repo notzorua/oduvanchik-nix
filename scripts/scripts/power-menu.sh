@@ -42,8 +42,7 @@ run_cmd() {
     elif [[ $1 == '--reboot' ]]; then
       systemctl reboot
     elif [[ $1 == '--suspend' ]]; then
-      hyprlock &
-      systemctl suspend
+      systemctl suspend # блокирует hypridle (before_sleep_cmd = lock)
     fi
   else
     exit 0

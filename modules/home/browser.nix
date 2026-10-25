@@ -4,6 +4,14 @@
 
   programs.zen-browser = {
     enable = true;
+    # about:config через policies.json: не трогает profiles.ini и профиль
+    policies.Preferences = {
+      # без всплывающих подсказок (и title на сайтах)
+      "browser.chrome.toolbar_tips" = {
+        Value = false;
+        Status = "default";
+      };
+    };
   };
 
   xdg.mimeApps =

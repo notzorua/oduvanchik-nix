@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     ## Multimedia
-    amberol # music player
+# amberol  # временно: python3.14-reuse 6.2.0 не собирается (нет output man), вернуть после фикса в nixpkgs
     audacity
     gimp
     media-downloader

@@ -28,7 +28,6 @@
     discord-canary
     inputs.ayugram-desktop.packages.${pkgs.stdenv.hostPlatform.system}.default
     osu-lazer-bin
-    bottles
     github-desktop
     tor-browser
     librewolf

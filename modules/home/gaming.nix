@@ -34,6 +34,29 @@
         );
     })
 
+    (pkgs.bottles.override {
+      buildFHSEnv =
+        args:
+        pkgs.buildFHSEnv (
+          args
+          // {
+            # multiPkgs вызывается дважды — с 64- и 32-битным набором пакетов.
+            # 32-битный dosbox бесполезен (его bin/dosbox перекрывает 64-битный, библиотек
+            # у него нет), но тянет i686 graphicsmagick → libjxl/libheif → rav1e, libhwy,
+            # gperftools: Hydra их не собирает, и после сборки мусора они компилируются заново.
+            multiPkgs =
+              envPkgs:
+              let
+                originalPkgs = args.multiPkgs envPkgs;
+              in
+              if envPkgs.stdenv.hostPlatform.isi686 then
+                builtins.filter (p: (p.pname or "") != "dosbox") originalPkgs
+              else
+                originalPkgs;
+          }
+        );
+    })
+
     #wineWow64Packages.stable
     #wineWow64Packages.stable
     #wineWow64Packages.waylandFull

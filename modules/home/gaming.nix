@@ -20,8 +20,16 @@
                   doCheck = false;
                 });
               in
-              # Replace broken openldap with the custom one
-              builtins.filter (p: (p.pname or "") != "openldap") originalPkgs ++ [ customLdap ];
+              # Replace broken openldap with the custom one;
+              # gtk2 — broken в nixpkgs (issue 410814), нужен только старым нативным играм
+              builtins.filter (
+                p:
+                !(builtins.elem (p.pname or "") [
+                  "openldap"
+                  "gtk+"
+                ])
+              ) originalPkgs
+              ++ [ customLdap ];
           }
         );
     })

@@ -67,7 +67,6 @@ in
     wf-recorder
     glib
     wayland
-    direnv
     tesseract
     hyprshade
   ];

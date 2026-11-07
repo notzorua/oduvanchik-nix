@@ -25,7 +25,7 @@
     zenity
     chromium
     qbittorrent
-    discord-canary
+    vesktop # Discord + Vencord; есть в cache.nixos.org (discord-canary качал full.distro с заблокированного discordapp.net)
     inputs.ayugram-desktop.packages.${pkgs.stdenv.hostPlatform.system}.default
     osu-lazer-bin
     github-desktop

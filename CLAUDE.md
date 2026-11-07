@@ -153,12 +153,13 @@ services.greetd =
 ## Сеть
 - Часть доменов заблокирована. Прокси-клиент **Throne** (sing-box), локальный прокси `127.0.0.1:2080` (mixed).
 - Через прокси `cache.nixos.org` бывает очень медленным — такие домены в `no_proxy`.
+- **nix-daemon ходит через Throne** (`systemd.services.nix-daemon.environment` в `modules/core/program.nix`), бинарные кэши (`cache.nixos.org`, `cache.nixos-cuda.org`, `.cachix.org`) — напрямую. Без запущенного Throne загрузки исходников падают с `Connection refused` на `127.0.0.1:2080`. Новый бинарный кэш с другим доменом — добавить в `no_proxy` там же.
 - **AmneziaWG/WARP** (`amneziawg-awg0`) режет доступ к Claude и `cache.nixos.org`.
 - Частая ловушка: старые `http_proxy`/`https_proxy` в окружении запущенной оболочки перебивают маршрут → `unset http_proxy https_proxy` или перезаход в сессию.
 - Если после падения Throne не работает DNS — остались его `ip rule` (fwmark 0x2023/0x2024, таблица 51820): `ip rule list`, удалить лишние, или перезагрузиться.
 
 ## Открытые задачи
-1. **fluff**: установлен и загружается (хост переименован desktop→stem, fluff добавлен, `services.asusd` для подсветки клавиатуры настроен). Осталось: раскомментировать `./spicetify.nix` (`modules/home/default.nix`), настроить Throne постоянно (`programs.throne`), докачать `discord-canary` и C#-расширение VSCodium, донастроить ноут (батарея/tlp, Wi-Fi, тачпад, разрешение в Hyprland).
+1. **fluff**: установлен и загружается (хост переименован desktop→stem, fluff добавлен, `services.asusd` для подсветки клавиатуры настроен). Осталось: раскомментировать `./spicetify.nix` (`modules/home/default.nix`), настроить Throne постоянно (`programs.throne`), докачать C#-расширение VSCodium (вместо `discord-canary` теперь `vesktop` из кэша — canary качался с заблокированного discordapp.net), донастроить ноут (батарея/tlp, Wi-Fi, тачпад, разрешение в Hyprland).
 2. **fluff переведён на Hyprland на Lua.** Осталось проверить `monitor-watcher.sh` на зацикливание: он реагирует на событие `configreloaded`, а `hyprctl eval 'hl.monitor(…)'` не должен вызывать его снова (иначе зациклится).
 3. **DaVinci Resolve** закомментирован в `modules/core/davinchi.nix` — ждёт PR nixpkgs #562336 (фикс хеша).
 4. ~~`gemini-cli` / `gemini-cli-bin` убраны из конфига~~ (сделано).

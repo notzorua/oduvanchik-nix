@@ -166,3 +166,4 @@ services.greetd =
 5. Перегенерировать приватный ключ WARP (засвечен ранее).
 6. Waybar: перевести на systemd user service или добавить перезапуск в `nixup`.
 7. BIOS не обновлён (прошивка 10.2023), память на 2133 МГц без XMP.
+8. **Убрать временный overlay scooter** в `modules/core/nixpkgs.nix` (добавлен 09.11.2026: `onig_sys` не находил `pkg-config`, issue nixpkgs #585399; фикс — PR #584958, влит в master 08.11). Когда фикс дойдёт до nixos-unstable: `gh api repos/NixOS/nixpkgs/compare/ebd4e999d5a42977d5140e71d079ec09f78fd3cd...nixos-unstable --jq .status` → `ahead` или `identical` (`behind` — ещё нет). Затем `nixupd`, убрать overlay и проверить `nix build --no-link .#nixosConfigurations.stem.pkgs.scooter`.

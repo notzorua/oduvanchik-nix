@@ -4,6 +4,10 @@
   nix = {
     settings = {
       trusted-users = [ "zoroa" ];
+      # HTTP/1.1 вместо HTTP/2 для всех загрузок nix-daemon: на cache.nixos-cuda.org
+      # большие NAR (ollama-cuda ~1.1 ГБ) рвались с «Stream error in the HTTP/2 framing layer».
+      # Цена: вместо одного соединения на кэш — несколько параллельных TCP/TLS; на скорость почти не влияет.
+      http2 = false;
       auto-optimise-store = true;
       experimental-features = [
         "nix-command"

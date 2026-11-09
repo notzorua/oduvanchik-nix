@@ -166,4 +166,7 @@ services.greetd =
 5. Перегенерировать приватный ключ WARP (засвечен ранее).
 6. Waybar: перевести на systemd user service или добавить перезапуск в `nixup`.
 7. BIOS не обновлён (прошивка 10.2023), память на 2133 МГц без XMP.
-8. **Убрать временный overlay scooter** в `modules/core/nixpkgs.nix` (добавлен 09.11.2026: `onig_sys` не находил `pkg-config`, issue nixpkgs #585399; фикс — PR #584958, влит в master 08.11). Когда фикс дойдёт до nixos-unstable: `gh api repos/NixOS/nixpkgs/compare/ebd4e999d5a42977d5140e71d079ec09f78fd3cd...nixos-unstable --jq .status` → `ahead` или `identical` (`behind` — ещё нет). Затем `nixupd`, убрать overlay и проверить `nix build --no-link .#nixosConfigurations.stem.pkgs.scooter`.
+8. **Убрать временные overlay для Rust-пакетов** в `modules/core/nixpkgs.nix` (добавлены 09.11.2026). Причина общая: nixpkgs переводит Rust-крейты со встроенных копий библиотек на системные (трекинг-issue #570943 — разные библиотеки, #570940 — sqlite), а в derivation части пакетов не хватает зависимостей.
+   - **scooter**: `onig_sys` не находил `pkg-config` (issue #585399); фикс — PR #584958, влит в master 08.11. Дошёл ли до nixos-unstable: `gh api repos/NixOS/nixpkgs/compare/ebd4e999d5a42977d5140e71d079ec09f78fd3cd...nixos-unstable --jq .status` → `ahead` или `identical` (`behind` — ещё нет).
+   - **nix-web**: `cannot find -lsqlite3` (`libsqlite3-sys` через `sqlx`), overlay добавляет `sqlite`. Отдельного issue/PR на 09.11 нет — следить за пунктом `nix-web` в #570940: `gh issue view 570940 --repo NixOS/nixpkgs --json body --jq .body | grep nix-web` (`[x]` + ссылка на PR — починено; дальше проверить по этому PR так же, как у scooter).
+   - После `nixupd` убрать overlay и проверить `nix build --no-link .#nixosConfigurations.stem.pkgs.<пакет>`.

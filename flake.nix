@@ -1,6 +1,13 @@
 {
   description = "FrostPhoenix's nixos configuration";
+  nixConfig = {
+    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
+  };
   inputs = {
+    noctalia.url = "github:noctalia-dev/noctalia";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-throne.url = "github:NixOS/nixpkgs/0726a0ecb6d4e08f6adced58726b95db924cef57";
     #nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -54,11 +61,6 @@
 
     # Waybar из upstream: в nixpkgs ещё нет Lua-dispatch для Hyprland с configType = "lua".
     # Кэша у Waybar нет (собирается локально в любом случае), follows — чтобы не тянуть его старый nixpkgs.
-    waybar = {
-      url = "github:Alexays/Waybar";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-compat.follows = "flake-compat";
-    };
 
     # AyuGram от ndfined-crp (есть фальшивые копии — проверять владельца). Кэш: см. system.nix.
     # Без follows намеренно: кэш собран под его nixpkgs, с нашим — хеш другой и локальная компиляция.

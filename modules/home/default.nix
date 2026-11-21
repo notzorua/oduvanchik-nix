@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ host, ... }: {
   imports = [
     ./aseprite/aseprite.nix           # pixel art editor
     ./audacious/audacious.nix         # music player
@@ -32,13 +31,13 @@
     ./superfile/superfile.nix         # terminal file manager
     ./swayosd.nix                     # brightness / volume wiget
     ./swaync/swaync.nix               # notification deamon
-    ./waybar                          # status bar
-    ./waypaper.nix                    # GUI wallpaper picker
     ./xdg-mimes.nix                   # xdg config
     ./zsh                             # shell
     
     ./telegram.nix                    # telegram
     ./unity.nix
     ./vscodium.nix                    # code editor
-  ];
+  ] ++ (if host == "stem" then [
+    ./noctalia.nix
+  ] else []);
 }

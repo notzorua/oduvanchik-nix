@@ -43,6 +43,15 @@ bind(mod .. " + F1", "список привязок", exec("show-keybinds"))
 bind(mod .. " + Return", "терминал", exec("ghostty --gtk-single-instance=true"))
 bind("ALT + Return", "терминал в плавающем окне", exec("ghostty", { float = true, size = "1111 700" }))
 bind(mod .. " + SHIFT + Return", "терминал на весь экран", exec("ghostty", { fullscreen = true }))
+-- Прозрачность задаёт сам Ghostty (background-opacity = 0.5 в ghostty.nix), не Hyprland,
+-- поэтому windowrule не нужен: флаг командной строки перекрывает конфиг для этого окна.
+-- Без --gtk-single-instance=true — иначе окно откроет уже запущенный процесс со своим конфигом
+-- и флаги не применятся. Свой --class — чтобы окно можно было отличить в правилах/hyprctl.
+bind(
+	mod .. " + CTRL + Return",
+	"непрозрачный терминал",
+	exec("ghostty --class=dev.zoroa.ghostty-opaque --background-opacity=1")
+)
 bind(mod .. " + B", "браузер Zen на столе 1", exec("zen-beta", { workspace = "1 silent" }))
 bind(mod .. " + D", "меню программ (rofi)", exec("toggle-rofi rofi -show drun"))
 bind(
@@ -56,10 +65,8 @@ bind("ALT + Escape", "заблокировать экран", exec("lock"))
 bind(mod .. " + SHIFT + Escape", "меню выключения", exec("power-menu"))
 bind(mod .. " + E", "файлы (Nemo)", exec("nemo"))
 bind("ALT + E", "файлы (Nemo) в плавающем окне", exec("nemo", { float = true, size = "1111 700" }))
-bind(mod .. " + SHIFT + B", "показать/скрыть Waybar", exec("toggle-waybar"))
 bind(mod .. " + C", "пипетка: цвет с экрана", exec("hyprpicker -a"))
-bind(mod .. " + W", "выбрать обои", exec("wallpaper-picker"))
-bind(mod .. " + SHIFT + W", "Waypaper в плавающем окне", exec("waypaper", { float = true, size = "925 615" }))
+bind(mod .. " + W", "случайные обои", exec("noctalia msg wallpaper-random"))
 bind(mod .. " + N", "уведомления (swaync)", exec("swaync-client -t -sw"))
 bind("CTRL + SHIFT + Escape", "Mission Center на столе 9", exec("missioncenter", { workspace = "9" }))
 bind(mod .. " + equal", "лупа (woomer)", exec("woomer"))

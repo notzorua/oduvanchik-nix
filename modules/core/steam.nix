@@ -18,6 +18,10 @@
         "--expose-wayland"
       ];
     };
+
+    # Feral GameMode: на время игры — governor performance, renice и т. п.
+    # Запуск в Steam: `gamemoderun %command%` (на fluff: `nvidia-offload gamemoderun %command%`)
+    gamemode.enable = true;
   };
 
   hardware.steam-hardware.enable = true;

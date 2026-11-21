@@ -25,7 +25,6 @@ local floating = {
 	"imv",
 	"mpv",
 	"zenity",
-	"waypaper",
 	"SoundWireServer",
 	".sameboy-wrapped",
 	"org.gnome.Calculator",
@@ -37,7 +36,6 @@ for _, name in ipairs(floating) do
 end
 
 rule(class("rofi"), { pin = true })
-rule(class("waypaper"), { pin = true })
 rule(class("Aseprite"), { tile = true })
 
 rule(class("zenity"), { size = "850 500" })
@@ -109,7 +107,6 @@ rule(
 -- Было layerrule = [ "match:namespace rofi, dim_around on" … ].
 hl.layer_rule({ match = { namespace = "rofi" }, dim_around = true })
 hl.layer_rule({ match = { namespace = "swaync-control-center" }, dim_around = true })
-hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
 
 -- Одно окно на столе — без отступов. Было workspace = [ "w[tv1], gapsout:0, gapsin:0" … ].
 for _, ws in ipairs({ "w[tv1]", "f[1]" }) do

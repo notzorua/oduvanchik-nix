@@ -3,17 +3,7 @@
 # based on https://github.com/ash-17/omarchy-external-monitor/tree/d06a323e7fb39d73be3955b94305830bfdc4a74a
 
 restart-apps() {
-    # restart wallpaper
-    pkill .awww-daemon-wr 2> /dev/null
-    init-wallpaper &
 
-    # restart waybar
-    pkill .waybar-wrapped 2> /dev/null
-    waybar &
-
-    # restart swayosd (crashes on monitor change)
-    pkill .swayosd-server 2> /dev/null
-    swayosd-server &
 }
 
 handle-monitor-state() {

@@ -57,7 +57,6 @@ in
   home.packages = with pkgs; [
     screenshot
     satty
-    awww
     grimblast
     hyprpicker
     grim

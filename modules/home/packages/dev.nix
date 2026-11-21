@@ -10,7 +10,7 @@
     typescript
 
     claude-code
-
+    codex
     ## formating
     shfmt
     treefmt

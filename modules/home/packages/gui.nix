@@ -31,6 +31,5 @@
     github-desktop
     tor-browser
     librewolf
-    qutebrowser
   ];
 }

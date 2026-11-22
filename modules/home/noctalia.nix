@@ -189,6 +189,48 @@ in
         substituteInPlace src/config/config_types.cpp \
           --replace-fail 'return 0.55F;' 'return 0.72F;'
 
+        # Prefer the artwork shipped with apps in the launcher, keeping the desktop theme as fallback.
+        substituteInPlace src/system/icon_resolver.h \
+          --replace-fail 'explicit IconResolver(bool cacheMissing);' \
+                         'explicit IconResolver(bool cacheMissing, bool preferHicolor = false);' \
+          --replace-fail '  std::vector<std::string> m_pixmapDirs;' '  std::vector<std::size_t> m_searchOrder;
+          std::vector<std::string> m_pixmapDirs;' \
+          --replace-fail '  bool m_cacheMissing = false;' '  bool m_cacheMissing = false;
+          bool m_preferHicolor = false;'
+
+        substituteInPlace src/system/icon_resolver.cpp \
+          --replace-fail '#include <mutex>' '#include <mutex>
+        #include <numeric>' \
+          --replace-fail 'IconResolver::IconResolver(bool cacheMissing) : m_cacheMissing(cacheMissing) { rebuild(); }' \
+                         'IconResolver::IconResolver(bool cacheMissing, bool preferHicolor)
+            : m_cacheMissing(cacheMissing), m_preferHicolor(preferHicolor) {
+          rebuild();
+        }' \
+          --replace-fail '  m_searchDirs = state.plan.searchDirs;' '  m_searchDirs = state.plan.searchDirs;
+          m_searchOrder.resize(m_searchDirs.size());
+          std::iota(m_searchOrder.begin(), m_searchOrder.end(), std::size_t{0});
+          if (m_preferHicolor) {
+            // Keep directory indexes aligned with the shared theme cache.
+            std::ranges::stable_partition(m_searchOrder, [&](std::size_t i) { return m_searchDirs[i].theme == "hicolor"; });
+          }' \
+          --replace-fail '    for (std::size_t i = 0; i < m_searchDirs.size(); ++i) {
+              const IconSearchDir& dir = m_searchDirs[i];' '    for (const auto i : m_searchOrder) {
+              const IconSearchDir& dir = m_searchDirs[i];'
+
+        substituteInPlace src/shell/launcher/launcher_panel.h \
+          --replace-fail '  IconResolver m_iconResolver;' '  IconResolver m_iconResolver;
+          IconResolver m_appIconResolver{true, true};'
+
+        substituteInPlace src/shell/launcher/launcher_panel.cpp \
+          --replace-fail '.controlHeight = Style::controlHeight * scale,' '.controlHeight = Style::controlHeightLg * scale,' \
+          --replace-fail 'm_subtitle->setColor(mutedForeground);' \
+                         'm_subtitle->setColor(active ? mutedForeground : colorSpecFromRole(ColorRole::Secondary));' \
+          --replace-fail '    m_iconResolver.invalidateMissingCache();' '    m_iconResolver.invalidateMissingCache();
+            m_appIconResolver.invalidateMissingCache();' \
+          --replace-fail '      const std::string& resolved = m_iconResolver.resolve(result.iconName, iconTargetSize);' \
+                         '      auto& resolver = result.appIcon ? m_appIconResolver : m_iconResolver;
+              const std::string& resolved = resolver.resolve(result.iconName, iconTargetSize);'
+
         substituteInPlace src/shell/panel/panel_manager.cpp \
           --replace-fail '? barConfig.backgroundOpacity' '? std::min(barConfig.backgroundOpacity, 0.76F)' \
           --replace-fail 'const float newOpacity = barConfig.backgroundOpacity;' \
@@ -343,7 +385,8 @@ in
           search_position = "top";
           compact = false;
           categories = false;
-          colorize_icons = true;
+          colorize_icons = false;
+          show_app_origin_indicator = false;
         };
         window_switcher = {
           style = "grid";

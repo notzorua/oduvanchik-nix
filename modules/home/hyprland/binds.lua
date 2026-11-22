@@ -53,7 +53,6 @@ bind(
 	exec("ghostty --class=dev.zoroa.ghostty-opaque --background-opacity=1")
 )
 bind(mod .. " + B", "браузер Zen на столе 1", exec("zen-beta", { workspace = "1 silent" }))
-bind(mod .. " + D", "меню программ (rofi)", exec("toggle-rofi rofi -show drun"))
 bind(
 	mod .. " + SHIFT + D",
 	"Vesktop (Discord)",
@@ -66,7 +65,6 @@ bind(mod .. " + SHIFT + Escape", "меню выключения", exec("power-me
 bind(mod .. " + E", "файлы (Nemo)", exec("nemo"))
 bind("ALT + E", "файлы (Nemo) в плавающем окне", exec("nemo", { float = true, size = "1111 700" }))
 bind(mod .. " + C", "пипетка: цвет с экрана", exec("hyprpicker -a"))
-bind(mod .. " + W", "случайные обои", exec("noctalia msg wallpaper-random"))
 bind(mod .. " + N", "уведомления (swaync)", exec("swaync-client -t -sw"))
 bind("CTRL + SHIFT + Escape", "Mission Center на столе 9", exec("missioncenter", { workspace = "9" }))
 bind(mod .. " + equal", "лупа (woomer)", exec("woomer"))

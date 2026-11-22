@@ -1,10 +1,45 @@
-{ pkgs, lib, ... }:
+{ config, host, pkgs, lib, ... }:
 let
   # Запасной фон — вшитая копия (в /nix/store), если в рабочей папке картинок нет.
   fallback = ../../../wallpapers/lock/lock.png;
 
-  # lock — случайный фон из wallpapers/lock рабочей копии репозитория (без git и пересборки)
-  # → ссылка ~/.cache/lock-bg (её читает hyprlock) → hyprlock.
+  roseFrost = host == "stem";
+  lockImage = "${config.xdg.stateHome}/hyprlock/background";
+  lockWallpaper = pkgs.writeShellApplication {
+    name = "lock-wallpaper";
+    runtimeInputs = [ pkgs.coreutils ];
+    text = ''
+      target=${lib.escapeShellArg lockImage}
+      case "$#" in
+        0)
+          image=$(LC_ALL=C ${lib.getExe pkgs.zenity} --file-selection \
+            --title="Lock screen wallpaper" \
+            --filename="$HOME/nixos-configuration/wallpapers/lock/" \
+            --file-filter='Images | *.png *.jpg *.jpeg *.webp *.PNG *.JPG *.JPEG *.WEBP') || exit 0
+          ;;
+        1)
+          image=$1
+          if [[ "$image" == --ensure ]]; then
+            [[ -f "$target" && -r "$target" ]] && exit 0
+            image=${fallback}
+            # Carry over the currently displayed lock image on the first activation.
+            if [[ ! -L "$target" && -r "$HOME/.cache/lock-bg" && -f "$HOME/.cache/lock-bg" ]]; then
+              image="$HOME/.cache/lock-bg"
+            fi
+          fi
+          ;;
+        *) echo "Usage: lock-wallpaper [image]" >&2; exit 2 ;;
+      esac
+      if [[ ! -f "$image" || ! -r "$image" ]]; then
+        echo "Cannot read the image: $image" >&2
+        exit 1
+      fi
+      image=$(realpath -e -- "$image")
+      mkdir -p -- "$(dirname -- "$target")"
+      ln -sfnT -- "$image" "$target"
+    '';
+  };
+
   lock = pkgs.writeShellApplication {
     name = "lock";
     runtimeInputs = with pkgs; [
@@ -19,6 +54,10 @@ let
         exit 0
       fi
 
+      ${if roseFrost then ''
+        # Keep locking available even if the selected image or its directory disappears.
+        ${lib.getExe lockWallpaper} --ensure || true
+      '' else ''
       dir="$HOME/nixos-configuration/wallpapers/lock"
       bg=""
       if [[ -d "$dir" ]]; then
@@ -29,12 +68,25 @@ let
       mkdir -p "$HOME/.cache"
       ln -sfn "''${bg:-${fallback}}" "$HOME/.cache/lock-bg"
 
+      ''}
       exec hyprlock
     '';
   };
 in
 {
-  home.packages = [ lock ];
+  home.packages = [ lock ] ++ lib.optional roseFrost lockWallpaper;
+
+  home.activation.prepareLockWallpaper = lib.mkIf roseFrost (lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run ${lib.getExe lockWallpaper} --ensure
+  '');
+
+  wayland.windowManager.hyprland.extraLuaFiles.lockWallpaper = lib.mkIf roseFrost {
+    content = ''
+      hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("${lib.getExe lockWallpaper}"), {
+        description = "Choose lock screen wallpaper",
+      })
+    '';
+  };
 
   # Только блокировка перед сном и по loginctl lock-session — без таймеров простоя.
   services.hypridle = {
@@ -55,6 +107,73 @@ in
         fractional_scaling = 0;
       };
 
+    } // (if roseFrost then {
+      background = [{
+        path = lockImage;
+        color = "rgb(201D27)";
+        blur_passes = 0;
+        brightness = 1.0;
+        contrast = 1.0;
+      }];
+
+      label = [
+        {
+          text = ''cmd[update:1000] ${pkgs.coreutils}/bin/date '+%H:%M' '';
+          font_family = "DejaVu Sans Light";
+          font_size = 116;
+          color = "rgb(FFF1F7)";
+          shadow_passes = 2;
+          shadow_size = 4;
+          shadow_color = "rgba(2B2138E0)";
+          halign = "left";
+          valign = "center";
+          position = "8%, 8%";
+        }
+        {
+          text = ''cmd[update:60000] LC_ALL=C ${pkgs.coreutils}/bin/date '+%A, %-d %B' '';
+          font_family = "DejaVu Sans";
+          font_size = 18;
+          color = "rgb(F2A9C3)";
+          shadow_passes = 2;
+          shadow_size = 3;
+          shadow_color = "rgba(2B2138E0)";
+          halign = "left";
+          valign = "center";
+          position = "8%, -5%";
+        }
+      ];
+
+      input-field = [{
+        size = "308, 52";
+        halign = "left";
+        valign = "bottom";
+        position = "8%, 10%";
+        rounding = 12;
+        outline_thickness = 1;
+        inner_color = "rgba(F4E9F0E6)";
+        outer_color = "rgb(F2A9C3) rgb(D4C5E9) 30deg";
+        font_family = "DejaVu Sans";
+        font_color = "rgb(3E2E45)";
+        check_color = "rgb(D4C5E9)";
+        fail_color = "rgb(F1A2B0)";
+        capslock_color = "rgb(E2BD97)";
+        dots_size = 0.22;
+        dots_spacing = 0.35;
+        fade_on_empty = false;
+        placeholder_text = "Password";
+        fail_text = "Try again";
+      }];
+
+      animations = {
+        enabled = true;
+        bezier = [ "frostEase, 0.22, 1, 0.36, 1" ];
+        animation = [
+          "fadeIn, 1, 3, frostEase"
+          "fadeOut, 1, 2, frostEase"
+          "inputFieldColors, 1, 2, frostEase"
+        ];
+      };
+    } else {
       background = [
         {
           path = "~/.cache/lock-bg"; # ставит скрипт lock (выше); ~ hyprlock раскрывает сам
@@ -115,6 +234,6 @@ in
       ];
 
       animation = [ "inputFieldColors, 0" ];
-    };
+    });
   };
 }

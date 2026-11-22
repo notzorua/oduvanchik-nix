@@ -11,6 +11,20 @@ let
     ];
   };
   icon-theme-name = "Papirus-Dark";
+  roseFrost = host == "stem";
+  dialogColors = ''
+    dialog, messagedialog {
+      background-color: #2b2030;
+      color: #f6eee8;
+    }
+
+    dialog button.suggested-action,
+    messagedialog button.suggested-action {
+      background-color: #f2a9c3;
+      background-image: none;
+      color: #351f2b;
+    }
+  '';
 in
 {
   fonts.fontconfig.enable = true;
@@ -47,12 +61,34 @@ in
     };
 
     gtk3 = {
+      extraCss = lib.optionalString roseFrost (dialogColors + ''
+        menu, .menu, popover.background {
+          background-color: #3e2d46;
+          color: #f6eee8;
+        }
+
+        menuitem:hover, menuitem:selected {
+          background-color: #63445e;
+          color: #faefea;
+        }
+      '');
       extraConfig = {
         gtk-application-prefer-dark-theme = lib.mkForce true;
       };
     };
 
     gtk4 = {
+      extraCss = lib.optionalString roseFrost (dialogColors + ''
+        popover contents {
+          background-color: #3e2d46;
+          color: #f6eee8;
+        }
+
+        popover modelbutton:hover, popover modelbutton:selected {
+          background-color: #63445e;
+          color: #faefea;
+        }
+      '');
       theme = {
         name = gtk-theme-name;
         package = gtk-theme;

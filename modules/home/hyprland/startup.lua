@@ -30,14 +30,6 @@ hl.on("hyprland.start", function()
         hl.exec_cmd(cmd)
     end
 
-    -- Случайные обои при каждой новой сессии
-    hl.exec_cmd([[sh -c '
-        until noctalia msg wallpaper-get >/dev/null 2>&1; do
-            sleep 0.2
-        done
-        noctalia msg wallpaper-random
-    ']])
-
     for _, app in ipairs(apps) do
         hl.exec_cmd(app[1], { workspace = app[2] })
     end

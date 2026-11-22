@@ -1,0 +1,15 @@
+id = "zoroa/almanac"
+name = "Rose Frost"
+version = "1.0.0"
+plugin_api = 52
+author = "zoroa"
+icon = "clock"
+
+[[panel]]
+id = "overview"
+entry = "overview.luau"
+placement = "attached"
+position = "top_right"
+width = 354
+height = "content"
+max_height = 520

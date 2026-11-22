@@ -104,8 +104,6 @@ rule(
 -- Слои (панели, меню) и рабочие столы
 ---------------------------------------------------------------------------
 
--- Было layerrule = [ "match:namespace rofi, dim_around on" … ].
-hl.layer_rule({ match = { namespace = "rofi" }, dim_around = true })
 hl.layer_rule({ match = { namespace = "swaync-control-center" }, dim_around = true })
 
 -- Одно окно на столе — без отступов. Было workspace = [ "w[tv1], gapsout:0, gapsin:0" … ].

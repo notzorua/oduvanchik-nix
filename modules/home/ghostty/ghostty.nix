@@ -1,4 +1,4 @@
-{ host, ... }:
+{ host, lib, ... }:
 {
   programs.ghostty = {
     enable = true;
@@ -19,7 +19,7 @@
 
       ##### Theme #####
       theme = "gruvbox";
-      background-opacity = 0.5;
+      background-opacity = if host == "stem" then 0.32 else 0.5;
       adjust-cursor-thickness = 1;
 
       mouse-hide-while-typing = false;
@@ -74,6 +74,13 @@
         "shift+page_down=scroll_page_down"
         "shift+page_up=scroll_page_up"
       ];
+    } // lib.optionalAttrs (host == "stem") {
+      background-blur = true;
+      background-opacity-cells = false;
+      foreground = "F6EEE8";
+      cursor-color = "F2A9C3";
+      selection-background = "63445E";
+      selection-foreground = "FAEFEA";
     };
 
     themes.gruvbox = {
@@ -107,5 +114,12 @@
     };
   };
 
-  xdg.configFile."ghostty/styles/tabs.css".source = ./styles/tabs.css;
+  xdg.configFile."ghostty/styles/tabs.css".text =
+    let
+      css = builtins.readFile ./styles/tabs.css;
+    in
+    if host == "stem" then
+      lib.replaceStrings [ "#1d2021" "#fbf1c7" "#282828" ] [ "#515151" "#f6eee8" "#4a4a4a" ] css
+    else
+      css;
 }

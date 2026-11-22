@@ -1,0 +1,14 @@
+id = "zoroa/dual-output"
+name = "Speakers + Headphones"
+version = "1.0.0"
+plugin_api = 43
+author = "zoroa"
+icon = "headphones"
+
+[[panel]]
+id = "volume"
+entry = "volume.luau"
+width = 406
+height = "content"
+max_height = 292
+placement = "attached"

@@ -8,6 +8,8 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/core
+    ../../modules/core/vsftpd.nix
+    ../../modules/core/lamp.nix
   ];
 
   powerManagement.cpuFreqGovernor = "performance";

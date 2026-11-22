@@ -1,4 +1,7 @@
-{ config, inputs, lib, pkgs, ... }:
+{ config, host, inputs, lib, pkgs, ... }:
+let
+  dualOutput = host == "stem";
+in
 {
   imports = [ inputs.noctalia.homeModules.default ];
 
@@ -259,14 +262,13 @@
             }'
       '';
     });
-    extraPackages = [
+    extraPackages = lib.optional dualOutput
       (pkgs.writeShellScriptBin "noctalia-dual-output" ''
         set -euo pipefail
         export PATH=${lib.makeBinPath [ pkgs.pulseaudio pkgs.jq pkgs.coreutils ]}:"$PATH"
         export LC_ALL=C
         ${builtins.readFile ./noctalia-plugins/dual-output.sh}
-      '')
-    ];
+      '');
 
     customPalettes."Rose Frost" = {
       version = 2;
@@ -390,7 +392,8 @@
         widget_spacing = 12;
         start = [ "launcher" "clock" "date" ];
         center = [ "workspaces" ];
-        end = [ "privacy" "network" "bluetooth" "notifications" "tray" "dual-output" "control-center" ];
+        end = [ "privacy" "network" "bluetooth" "notifications" "tray" ]
+          ++ [ (if dualOutput then "dual-output" else "battery") "control-center" ];
       };
 
       widget = {
@@ -435,22 +438,23 @@
           colorize_icons = true;
         };
         bluetooth.show_label = false;
-        dual-output = {
-          type = "custom_button";
-          glyph = "headphones";
-          tooltip = "Speakers and headphones";
-          actions.left = "panel-toggle zoroa/dual-output:volume";
-        };
         control-center = {
           glyph = "adjustments";
           custom_image = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake-white.svg";
           custom_image_colorize = true;
           icon_color = "#DEDEDE";
         };
+      } // lib.optionalAttrs dualOutput {
+        dual-output = {
+          type = "custom_button";
+          glyph = "headphones";
+          tooltip = "Speakers and headphones";
+          actions.left = "panel-toggle zoroa/dual-output:volume";
+        };
       };
 
       plugins = {
-        enabled = [ "zoroa/dual-output" "zoroa/almanac" ];
+        enabled = lib.optional dualOutput "zoroa/dual-output" ++ [ "zoroa/almanac" ];
         source = [
           {
             name = "desktop";
@@ -502,7 +506,7 @@
   '';
 
   # Remove the old Rosé Pine override while retaining wallpaper selections and other GUI state.
-  home.activation.migrateNoctaliaTheme = lib.hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" ] ''
+  home.activation.migrateNoctaliaTheme = lib.mkIf (host == "stem") (lib.hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" ] ''
     run ${lib.getExe pkgs.python3} - "${config.xdg.stateHome}/noctalia/settings.toml" <<'PY'
     import pathlib
     import re
@@ -523,5 +527,5 @@
             temporary.chmod(path.stat().st_mode & 0o777)
             temporary.replace(path)
     PY
-  '';
+  '');
 }

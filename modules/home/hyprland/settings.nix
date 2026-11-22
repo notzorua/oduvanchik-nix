@@ -1,7 +1,4 @@
-{ host, lib, ... }:
-let
-  roseFrost = host == "stem";
-in
+{ roseFrost, lib, ... }:
 {
   # Настройки Hyprland. В Lua-режиме home-manager превращает каждый ключ settings в вызов
   # hl.<ключ>(…): settings.config = { … } → hl.config({ … }). Вложенность та же, что была,

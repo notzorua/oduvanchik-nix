@@ -1,4 +1,4 @@
-{ lib, pkgs, host, ... }:
+{ lib, pkgs, roseFrost, ... }:
 let
   gtk-theme-name = "Colloid-Green-Dark-Gruvbox";
   gtk-theme = pkgs.colloid-gtk-theme.override {
@@ -11,7 +11,6 @@ let
     ];
   };
   icon-theme-name = "Papirus-Dark";
-  roseFrost = host == "stem";
   dialogColors = ''
     dialog, messagedialog {
       background-color: #2b2030;

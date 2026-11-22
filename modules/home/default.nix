@@ -1,4 +1,4 @@
-{ host, ... }: {
+{ roseFrost, lib, ... }: {
   imports = [
     ./aseprite/aseprite.nix           # pixel art editor
     ./audacious/audacious.nix         # music player
@@ -37,7 +37,5 @@
     ./telegram.nix                    # telegram
     ./unity.nix
     ./vscodium.nix                    # code editor
-  ] ++ (if host == "stem" then [
-    ./noctalia.nix
-  ] else []);
+  ] ++ lib.optional roseFrost ./noctalia.nix;
 }

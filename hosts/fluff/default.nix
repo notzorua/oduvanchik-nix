@@ -11,6 +11,7 @@
   ];
 
   powerManagement.cpuFreqGovernor = "performance";
+  services.upower.enable = true;
 
   # Яркость: вместо nvidia_wmi_ec_backlight (не управляет экраном) — родной регулятор amdgpu (iGPU 780M)
   boot.kernelParams = [ "acpi_backlight=native" ];

@@ -1,4 +1,4 @@
-{ host, lib, ... }:
+{ roseFrost, lib, ... }:
 {
   programs.ghostty = {
     enable = true;
@@ -19,7 +19,7 @@
 
       ##### Theme #####
       theme = "gruvbox";
-      background-opacity = if host == "stem" then 0.32 else 0.5;
+      background-opacity = if roseFrost then 0.32 else 0.5;
       adjust-cursor-thickness = 1;
 
       mouse-hide-while-typing = false;
@@ -74,7 +74,7 @@
         "shift+page_down=scroll_page_down"
         "shift+page_up=scroll_page_up"
       ];
-    } // lib.optionalAttrs (host == "stem") {
+    } // lib.optionalAttrs roseFrost {
       background-blur = true;
       background-opacity-cells = false;
       foreground = "F6EEE8";
@@ -118,7 +118,7 @@
     let
       css = builtins.readFile ./styles/tabs.css;
     in
-    if host == "stem" then
+    if roseFrost then
       lib.replaceStrings [ "#1d2021" "#fbf1c7" "#282828" ] [ "#515151" "#f6eee8" "#4a4a4a" ] css
     else
       css;

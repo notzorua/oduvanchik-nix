@@ -1,9 +1,8 @@
-{ config, host, pkgs, lib, ... }:
+{ config, roseFrost, pkgs, lib, ... }:
 let
   # Запасной фон — вшитая копия (в /nix/store), если в рабочей папке картинок нет.
   fallback = ../../../wallpapers/lock/lock.png;
 
-  roseFrost = host == "stem";
   lockImage = "${config.xdg.stateHome}/hyprlock/background";
   lockWallpaper = pkgs.writeShellApplication {
     name = "lock-wallpaper";

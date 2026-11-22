@@ -1,7 +1,4 @@
-{ host, lib, pkgs, ... }:
-let
-  roseFrost = host == "stem";
-in
+{ roseFrost, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [ rofi ];
 

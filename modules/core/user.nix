@@ -10,7 +10,10 @@
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
-    extraSpecialArgs = { inherit inputs username host; };
+    extraSpecialArgs = {
+      inherit inputs username host;
+      roseFrost = builtins.elem host [ "stem" "fluff" ];
+    };
     users.${username} = {
       imports = [ ./../home ];
       home.username = "${username}";
